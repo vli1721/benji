@@ -5,7 +5,15 @@
                 color="blue lighten-3"
         >
 
-            <p style="margin: 20px; font-size: 4vw; text-align: center">Notifications</p>
+            <div>
+                <p style="margin: 20px; font-size: 4vw; text-align: center; overflow-wrap: normal;">Notifications</p>
+
+                <ul style="overflow-y: scroll; height: 100px">
+                    <li v-for="i in 100"  style="display:block;">{{i}}</li>
+                </ul>
+            </div>
+
+
         </v-sheet>
 </template>
 
