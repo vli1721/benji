@@ -1,27 +1,26 @@
 <template>
   <v-app>
-    <v-container>
+    <v-toolbar>
+      <v-toolbar-title>Benji</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat>Link One</v-btn>
+        <v-btn flat>Link Two</v-btn>
+        <v-btn flat>Link Three</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
 
-      <v-sheet
-              class="d-flex"
-              color="green lighten-3"
-              height="424"
-      >
+    <Balance></Balance>
 
-        <p>Balance</p>
-      </v-sheet>
-
-    </v-container>
   </v-app>
 </template>
 
 <script>
-export default {
-  name: 'App',
-  data () {
-    return {
-      //
-    }
+  import Balance from './components/Balance.vue'
+
+  export default{
+      components: {
+          Balance
+      }
   }
-}
 </script>
