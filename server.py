@@ -16,8 +16,28 @@ config = {
 firebase = pyrebase.initialize_app(config)
 
 db = firebase.database()
-print(db.child("chores").get().val())
+users = db.child("users")
+print(users.child("bobby").get().val())
+chores = db.child("chores")
+
+# chore = "chore1"
+# chores.child(chore).update({"completed": True})
 
 
-# @app.route("/", methods=["GET", "POST"])
-# def index():
+@app.route("/", methods=["GET"])
+def index():
+	return "Hello World"
+
+@app.route("/update_chore", methods=["POST"])
+def update_chore():
+	print(request.get_json())
+	# if not request.args.get("username"):
+	# 	return "error"
+	# username = str(request.args.get("username"))
+
+	# if not request.args.get("chore"):
+	# 	return "error"
+	# chore = str(request.args.get("chore"))
+
+
+	# chores.child(chore).update({"completed": True})
