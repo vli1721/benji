@@ -13,6 +13,7 @@ class Intro extends Component {
     super(props);
 
     this.state = {
+      numFaces: null,
     }
 
     this.mtcnnForwardParams = {
@@ -131,6 +132,10 @@ class Intro extends Component {
 
     const detections = await faceapi.detectAllFaces(input)
 
+    if (detections.length < 1) {
+      return setTimeout(() => this.onPlay())
+    }
+
     // resize the detected boxes in case your displayed image has a different size then the original
     // const detectionsForSize = faceapi.resizeResults(detections, { width: input.width, height: input.height })
     // draw them into a canvas
@@ -146,8 +151,11 @@ class Intro extends Component {
     ctx.lineWidth = 3;
     ctx.strokeStyle = 'red';
     const box = detections[0].box
+    this.setState({
+      numFaces: detections.length
+    })
     ctx.strokeRect(box.x, box.y, box.width, box.height);
-    // setTimeout(() => this.onPlay())
+    setTimeout(() => this.onPlay())
 
   }
 
@@ -160,6 +168,7 @@ class Intro extends Component {
           <video id="inputVideo" ref="video" autoPlay={true} muted></video>
           <canvas id="overlay" ref="canvas" />
         </div>
+        { this.state.numFaces != null && <h2>{this.state.numFaces} faces detected</h2>}
       </div>
     );
   }

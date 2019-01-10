@@ -11,6 +11,12 @@
   top: 0;
   left: 0;
 }
+
+#inputVideo {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
 #overlay {
   z-index: 10;
 }
