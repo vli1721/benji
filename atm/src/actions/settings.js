@@ -23,6 +23,20 @@ export const startGetPage = () => {
     }
 }
 
+export const changePage = (page) => {
+    type: 'CHANGE_PAGE',
+    page
+}
+
+export const startChangePage = (page) => {
+    return (dispatch, getState) => {
+        dispatch(changePage(page));
+
+        const user = getState().settings.user;
+        database.ref(`users/${user}/atm_page`).set(page);
+    }
+}
+
 
 /* BALANCE */
 
