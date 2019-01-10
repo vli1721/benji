@@ -12,12 +12,14 @@
 
     <Balance class="mycard"></Balance>
     <Notifications class="mycard"></Notifications>
+    <Chores class ="mycard"><Chores>
   </v-app>
 </template>
 
 <script>
   import Balance from './components/Balance.vue'
   import Notifications from './components/Notifications'
+  import Chores from './components/Chores'
 
 
   export default{
