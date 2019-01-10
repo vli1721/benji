@@ -19,6 +19,7 @@ class Intro extends Component {
       numFaces: null,
       face: null,
       expression: null,
+      threshold: 0.4,
     }
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -111,7 +112,7 @@ class Intro extends Component {
       const bestMatch = this.faceMatcher.findBestMatch(detections[0].descriptor)
 
       console.log(bestMatch.toString())
-      const face = bestMatch.distance > .4 ? null : bestMatch.label
+      const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? "unknown" : bestMatch.label
 
 
       this.setState({
