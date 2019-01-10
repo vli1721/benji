@@ -10,17 +10,26 @@
       </v-toolbar-items>
     </v-toolbar>
 
-    <Balance></Balance>
-
+    <Balance class="mycard"></Balance>
+    <Notifications class="mycard"></Notifications>
   </v-app>
 </template>
 
 <script>
   import Balance from './components/Balance.vue'
+  import Notifications from './components/Notifications'
+
 
   export default{
       components: {
-          Balance
+          Balance,
+          Notifications
       }
   }
 </script>
+
+<style>
+  /**{*/
+    /*border: 1px solid red;*/
+  /*}*/
+</style>
