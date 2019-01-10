@@ -24,9 +24,11 @@ export const startGetPage = () => {
 }
 
 export const changePage = (page) => {
-    type: 'CHANGE_PAGE',
-    page
-}
+    return {
+        type: 'CHANGE_PAGE',
+        page
+    }
+};
 
 export const startChangePage = (page) => {
     return (dispatch, getState) => {

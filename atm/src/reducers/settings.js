@@ -9,7 +9,14 @@ const settingsReducer = (state = settingsDefault, action) => {
                 ...state,
                 user: action.user
             }
+        case 'GET_PAGE':
+        case 'CHANGE_PAGE':
+            return {
+                ...state,
+                page: action.page
+            }
         case 'GET_BALANCE':
+        case 'CHANGE_BALANCE':
             return {
                 ...state,
                 balance: action.balance 
