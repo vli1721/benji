@@ -27,6 +27,7 @@
 </template>
 
 <script>
+
     export default {
         data() {
             return {
@@ -53,13 +54,18 @@
                         id: 5,
                         body: 'Eat food'
                     }
-                ]
+                ],
+                newChore: {
+                    description: '',
+                    reward: ''
+                }
             }
         },
         methods: {
             displayButtons(){
 
             },
+
             addChore(){
                 console.log(this.choreInput)
             },
