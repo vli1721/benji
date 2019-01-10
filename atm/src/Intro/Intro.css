@@ -1,6 +1,0 @@
-#inputVideo {
-  width: 640px;
-  height: 480px;
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
