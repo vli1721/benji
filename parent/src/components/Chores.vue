@@ -12,7 +12,7 @@
                     <v-form style="width: 100%">
                         <v-text-field label="Chore" style="width: 80%" v-model="choreInput"></v-text-field>
                     </v-form>
-                    <v-btn small round flat style="margin: auto 0 10px auto; width: 20px" class="text-capitalize" @click="addChore"><i class="fas fa-plus"></i></v-btn>
+                    <v-btn small round flat style="margin: auto 0 10px auto; width: 20px" class="text-capitalize" @click="writeUserData"><i class="fas fa-plus"></i></v-btn>
 
 
                 </div>
@@ -27,7 +27,20 @@
 </template>
 
 <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDa8Xluwh_e0fp-vVjyoZxDqekd7IcAoCk",
+        authDomain: "benji-42f8d.firebaseapp.com",
+        databaseURL: "https://benji-42f8d.firebaseio.com",
+        projectId: "benji-42f8d",
+        storageBucket: "benji-42f8d.appspot.com",
+        messagingSenderId: "533301633340"
+      };
+      firebase.initializeApp(config);
 
+    var database = firebase.database();
+
+    var ref = firebase.database().ref('users');
     export default {
         data() {
             return {
@@ -65,8 +78,14 @@
             displayButtons(){
 
             },
-
+            writeUserData() {
+                firebase.database().ref('users/bobby/chores').set({
+                description: this.choreInput,
+                reward: "10"
+                });
+            },
             addChore(){
+                var database = firebase.database();
                 console.log(this.choreInput)
             },
             deleteChore(id){
