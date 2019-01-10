@@ -26,7 +26,13 @@ chores = db.child("chores")
 
 @app.route("/", methods=["GET"])
 def index():
-	return "Hello World"
+	return render_template("stt_test.html")
+
+@app.route("/post_stt", methods=["POST"])
+def post_stt():
+	request_json = request.get_json()
+	print(request_json)
+	return "Request received post_stt"
 
 @app.route("/update_chore", methods=["POST"])
 def update_chore():

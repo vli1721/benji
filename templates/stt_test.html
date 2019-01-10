@@ -1,0 +1,50 @@
+<html>
+<header><title>STT Test</title></header>
+<body>
+  Text will appear here.
+<!-- <audio controls autoplay></audio> -->
+</body>
+
+<script src="jquery-3.3.1.min.js"></script>
+
+<script>
+
+    window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+    let finalTranscript = '';
+    let recognition = new window.SpeechRecognition();
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 10;
+    // recognition.continuous = true;
+    recognition.continuous = false;
+    recognition.onresult = (event) => {
+      let interimTranscript = '';
+      for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
+        let transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+      document.querySelector('body').innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</>';
+
+    }
+
+    recognition.onend = (event) => {
+      alert(finalTranscript);
+      data = finalTranscript
+      $.post( "ec2-3-85-164-61.compute-1.amazonaws.com/post_stt", function( data ) {
+        $( ".result" ).html( data );
+      });
+
+    }
+
+    recognition.start();
+
+
+
+
+</script>
+
+
+</html>
