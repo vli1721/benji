@@ -1,4 +1,9 @@
 <template>
+<v-sheet
+                style="width: 40%; margin: 20px auto 20px 20px; height: 40%;"
+                class="d-flex"
+                color="blue lighten-3"
+        >
   <v-expansion-panel>
     <v-expansion-panel-content
       v-for="(item,i) in 5"
@@ -10,4 +15,16 @@
       </v-card>
     </v-expansion-panel-content>
   </v-expansion-panel>
+
+</v-sheet>
 </template>
+
+<script>
+    export default {
+        data () {
+            return {
+
+            }
+        }
+    }
+</script>
