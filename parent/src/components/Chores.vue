@@ -40,7 +40,7 @@
 
     var database = firebase.database();
 
-    var ref = firebase.database().ref('users');
+    var ref = firebase.database().ref('users/bobby');
     export default {
         data() {
             return {
@@ -69,7 +69,7 @@
                     }
                 ],
                 newChore: {
-                    description: '',
+                    description: [],
                     reward: ''
                 }
             }
@@ -79,7 +79,9 @@
 
             },
             writeUserData() {
-                firebase.database().ref('users/bobby/chores').set({
+                var postsRef = ref.child("chores");
+                var newPostRef = postsRef.push();
+                newPostRef.set({
                 description: this.choreInput,
                 reward: "10"
                 });
