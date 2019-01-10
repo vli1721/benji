@@ -10,8 +10,10 @@
     </v-toolbar>
 
     <Balance class="mycard"></Balance>
-    <Notifications class="mycard"></Notifications>
-    <Chores class ="mycard"></Chores>
+    <div style="display: flex">
+      <Chores class ="mycard"></Chores>
+      <Notifications class="mycard"></Notifications>
+    </div>
   </v-app>
 </template>
 

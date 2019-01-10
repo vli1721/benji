@@ -1,7 +1,6 @@
 <template>
         <v-sheet
-                style="width: 40%; margin: 20px auto; height: 40%;"
-                class="d-flex"
+                style="width: 40%; margin: 20px auto; min-height: 40%;"
                 color="green lighten-3"
         >
 

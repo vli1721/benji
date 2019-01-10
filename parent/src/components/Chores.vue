@@ -1,30 +1,72 @@
 <template>
-<v-sheet
-                style="width: 40%; margin: 20px auto 20px 20px; height: 40%;"
-                class="d-flex"
-                color="blue lighten-3"
-        >
-  <v-expansion-panel>
-    <v-expansion-panel-content
-      v-for="(item,i) in 5"
-      :key="i"
+    <v-sheet
+            style="width: 40%; margin: 20px auto 20px 20px; min-height: 100%; "
+            color="yellow lighten-3"
     >
-      <div slot="header">Item</div>
-      <v-card>
-        <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
-      </v-card>
-    </v-expansion-panel-content>
-  </v-expansion-panel>
 
-</v-sheet>
+            <div style="overflow: hidden; margin: 20px">
+                <p style="margin:0 20px; font-size: 4vw; text-align: center">Chores</p>
+
+                <div class="addChore">
+                    <input type="text" placeholder="chore" style="width: 100%" v-model="choreInput">
+                    <v-btn small round flat style="margin: 0 0 0 auto; width: 20px" @click="addChore">Add Chore</v-btn>
+
+                </div>
+                <ul style="margin:0; overflow-y: scroll; height: 100px; padding: 0px">
+                    <li v-for="c in choresList"  style="display:flex;" @Mouseover="displayButtons">
+                        <p style="margin: 0; margin: auto 0">{{c.body}}</p>
+                        <v-btn flat style="margin: 0 0 0 auto">delete</v-btn>
+                    </li>
+                </ul>
+            </div>
+    </v-sheet>
 </template>
 
 <script>
     export default {
-        data () {
+        data() {
             return {
-
+                choreInput: '',
+                // pull from firebase to fill array
+                choresList: [
+                    {
+                        id: 1,
+                        body: 'Wash dishes'
+                    },
+                    {
+                        id: 2,
+                        body: 'Take out trash'
+                    },
+                    {
+                        id: 3,
+                        body: 'Behave in school'
+                    },
+                    {
+                        id: 4,
+                        body: 'Behave at work'
+                    },
+                    {
+                        id: 5,
+                        body: 'Eat food'
+                    }
+                ]
             }
-        }
+        },
+        methods: {
+            displayButtons(){
+
+            },
+            addChore(){
+                console.log(this.choreInput)
+            }
+        },
+
     }
 </script>
+
+<style>
+    .addChore{
+        display: flex;
+
+    }
+</style>
