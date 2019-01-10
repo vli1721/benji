@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-<<<<<<< HEAD
 import Intro from './Intro/Intro.js';
 import Balance from './Balance/Balance.js';
 import firebase from "firebase";
