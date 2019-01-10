@@ -30,7 +30,8 @@ def index():
 
 @app.route("/update_chore", methods=["POST"])
 def update_chore():
-	print(request.get_json())
+	request_json = request.get_json()
+	print(request_json)
 	# if not request.args.get("username"):
 	# 	return "error"
 	# username = str(request.args.get("username"))
@@ -41,3 +42,8 @@ def update_chore():
 
 
 	# chores.child(chore).update({"completed": True})
+	return "Request received"
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=80)
