@@ -12,16 +12,16 @@
                     <v-form style="width: 100%">
                         <v-text-field label="Chore" style="width: 80%" v-model="choreInput"></v-text-field>
                     </v-form>
-                    <v-btn small round flat style="margin: auto 0 auto auto; width: 20px" @click="addChore">Add Chore</v-btn>
+                    <v-btn small round flat style="margin: auto 0 10px auto; width: 20px" class="text-capitalize" @click="addChore"><i class="fas fa-plus"></i></v-btn>
 
 
                 </div>
-                <ul style="margin:0; overflow-y: scroll; height: 100px; padding: 0px">
-                    <li v-for="c in choresList"  style="display:flex;" @Mouseover="displayButtons" class="hoverable">
-                        <p style="margin: 0; margin: auto 0">{{c.body}}</p>
-                        <v-btn flat style="margin: 0 0 0 auto" @click="deleteChore(c.id)">delete</v-btn>
-                    </li>
-                </ul>
+                    <ul style="margin:0; overflow-y: scroll; height: 100px; padding: 0px">
+                        <li v-for="c in choresList"  style="display:flex;" @Mouseover="displayButtons" class="hoverable">
+                            <p style="margin: 0; margin: auto 0" class="text-capitalize">{{c.body}}</p>
+                            <v-btn flat style="margin: 0 0 0 auto;" class="text-capitalize" @click="deleteChore(c.id)"><i class="fas fa-trash"></i></v-btn>
+                        </li>
+                    </ul>
             </div>
     </v-sheet>
 </template>
@@ -94,4 +94,5 @@
     .hoverable:hover{
         opacity: .8;
     }
+
 </style>

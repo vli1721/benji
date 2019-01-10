@@ -8,9 +8,9 @@
             <div style="overflow: hidden; margin: 20px">
                 <p style="margin: 0 20px; font-size: 4vw; text-align: center; overflow-wrap: normal;">Notifications</p>
 
-                <ul style="overflow-y: scroll; height: 100px; padding: 10px">
-                    <li v-for="notif in notificationsList"  style="display:block;" @click="removeItem(notif.id)">{{notif.body}}</li>
-                </ul>
+                <div style="overflow-y: scroll; height: 100px; padding: 10px">
+                    <NI v-for="notif in notificationsList" :notif="notif" @remove="removeItem"></NI>
+                </div>
             </div>
 
 
@@ -18,9 +18,14 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-import { db } from '../main'
+    import firebase from 'firebase'
+    import { db } from '../main'
+    import NI from './NotificationItem'
+
     export default {
+        components: {
+            NI
+        },
         data () {
             return {
                 // someway push notif objects into this list
@@ -42,8 +47,6 @@ import { db } from '../main'
         },
         methods: {
             removeItem(id){
-                console.log('clicked')
-                console.log(id)
                 for(var i = 0; i < this.notificationsList.length; ++i){
                     if(id === this.notificationsList[i].id){
                         this.notificationsList.splice(i,1);
@@ -54,6 +57,7 @@ import { db } from '../main'
             }
 
         }
+
 
     }
 </script>

@@ -7,6 +7,8 @@
         >
 
             <p style="margin: 20px; font-size: 4vw; text-align: center">Balance: {{'$'+balance}}</p>
+            <p style="margin: 20px; font-size: 4vw; text-align: center">Almost to goal of 40</p>
+
         </v-sheet>
 </template>
 
