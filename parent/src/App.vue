@@ -12,7 +12,7 @@
 
     <Balance class="mycard"></Balance>
     <Notifications class="mycard"></Notifications>
-    <Chores class ="mycard"><Chores>
+    <Chores class ="mycard"></Chores>
   </v-app>
 </template>
 
@@ -25,7 +25,8 @@
   export default{
       components: {
           Balance,
-          Notifications
+          Notifications,
+          Chores
       }
   }
 </script>
