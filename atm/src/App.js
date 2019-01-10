@@ -11,6 +11,8 @@ class App extends Component {
     super(props);
     this.state = {
       page: Intro,
+      username: 'brian',
+      userInfo: null,
     }
   }
 
@@ -25,7 +27,11 @@ class App extends Component {
     };
     firebase.initializeApp(this.config);
     this.database = firebase.database();
-    this.pageRef = firebase.database().ref('atm_page');
+    this.balanceRef = firebase.database().ref(`users/${this.state.username}/balance`);
+    this.balanceRef.on('value', (snapshot) => {
+      this.setState({balance: snapshot.val()});
+    });
+    this.pageRef = firebase.database().ref(`users/${this.state.username}/atm_page`);
     this.pageRef.on('value', (snapshot) => {
       let page = Intro;
       switch (snapshot.val()) {
