@@ -1,12 +1,7 @@
 <template>
   <v-app>
-    <v-toolbar>
+    <v-toolbar color="pink lighten-3" style="box-shadow: none">
       <v-toolbar-title>Benji</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items >
-        <v-btn flat>Link Two</v-btn>
-        <v-btn flat>Link Three</v-btn>
-      </v-toolbar-items>
     </v-toolbar>
 
     <Balance class="mycard"></Balance>
@@ -40,4 +35,9 @@
   /**{*/
     /*border: 1px solid red;*/
   /*}*/
+
+  .mycard{
+    border-radius: 20px;
+  }
+
 </style>

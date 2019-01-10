@@ -2,6 +2,7 @@
         <v-sheet
                 style="width: 40%; margin: 20px 20px 20px auto; min-height: 100%;"
                 color="blue lighten-3"
+                elevation="3"
         >
 
             <div style="overflow: hidden; margin: 20px">
