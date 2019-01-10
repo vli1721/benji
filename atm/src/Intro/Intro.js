@@ -18,22 +18,7 @@ class Intro extends Component {
     this.state = {
       numFaces: null,
       face: null,
-    }
-
-    this.mtcnnForwardParams = {
-      // number of scaled versions of the input image passed through the CNN
-      // of the first stage, lower numbers will result in lower inference time,
-      // but will also be less accurate
-      maxNumScales: 10,
-      // scale factor used to calculate the scale steps of the image
-      // pyramid used in stage 1
-      scaleFactor: 0.709,
-      // the score threshold values used to filter the bounding
-      // boxes of stage 1, 2 and 3
-      scoreThresholds: [0.6, 0.7, 0.7],
-      // mininum face size to expect, the higher the faster processing will be,
-      // but smaller faces won't be detected
-      minFaceSize: 200
+      expression: null,
     }
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -45,7 +30,8 @@ class Intro extends Component {
     await faceapi.loadTinyFaceDetectorModel(MODEL_URL)
     await faceapi.loadFaceRecognitionModel(MODEL_URL);
     await faceapi.loadFaceLandmarkModel(MODEL_URL);
-    await faceapi.loadFaceLandmarkTinyModel(MODEL_URL)
+    await faceapi.loadFaceLandmarkTinyModel(MODEL_URL);
+    await faceapi.loadFaceExpressionModel(MODEL_URL);
   }
 
   async componentDidMount() {
@@ -66,12 +52,7 @@ class Intro extends Component {
       ),
     ]
 
-    // console.log(Object.keys(brian_1))
-    // console.log(new Float32Array(Object.values(brian_1)))
-
     this.faceMatcher = new faceapi.FaceMatcher(labeledDescriptors)
-
-
 
     console.log(faceapi.nets)
     
@@ -85,8 +66,27 @@ class Intro extends Component {
       /* handle the error */
       console.log(err);
     });
-
+    this.speak('Welcome to Benji! Smile to activate.')
     this.onPlay();
+  }
+
+  speak = (message) => {
+    var msg = new SpeechSynthesisUtterance(message)
+    var voices = window.speechSynthesis.getVoices()
+    msg.voice = voices[50]
+    window.speechSynthesis.speak(msg)
+  }
+
+  bestExpression = (expressions) => {
+    let maxProb = -1;
+    let maxExpression = null;
+    expressions.forEach((el) => {
+      if (el.probability > maxProb) {
+        maxProb = el.probability;
+        maxExpression = el.expression;
+      }
+    });
+    return maxExpression;
   }
 
   async onPlay() {
@@ -96,53 +96,60 @@ class Intro extends Component {
     if(!input.currentTime || input.paused || input.ended)
         return setTimeout(() => this.onPlay())
 
-    const canvas = this.refs.canvas;
+    // if (this.state.expression == "happy") {
+      const detections = await faceapi.detectAllFaces(input)
+      .withFaceExpressions()
+      .withFaceLandmarks(true)
+      .withFaceDescriptors()
 
-    const detections = await faceapi.detectAllFaces(input)
-    .withFaceLandmarks(true)
-    .withFaceDescriptors()
+      if (detections.length < 1) {
+        return setTimeout(() => this.onPlay())
+      } 
 
-    if (detections.length < 1) {
-      return setTimeout(() => this.onPlay())
-    } 
+      console.log(detections)
 
-    console.log(detections)
+      const bestMatch = this.faceMatcher.findBestMatch(detections[0].descriptor)
 
-    const bestMatch = this.faceMatcher.findBestMatch(detections[0].descriptor)
+      console.log(bestMatch.toString())
+      const face = bestMatch.distance > .4 ? null : bestMatch.label
 
-    console.log(bestMatch.toString())
 
-    // faceapi.drawDetection(canvas, detections, { withScore: true })
-    // ctx.rect(20, 20, 150, 100);
-    // ctx.stroke();
-    // ctx.lineWidth = 3;
-    // ctx.strokeStyle = 'red';
-    // const box = detections[0].box
-    // ctx.strokeRect(box.x, box.y, box.width, box.height);
+      this.setState({
+        numFaces: detections.length,
+        face: face,
+        expression: this.bestExpression(detections[0].expressions),
+      })
+    // } else {
+    //   const detections = await faceapi.detectAllFaces(input)
+    //   .withFaceExpressions()
 
-    this.setState({
-      numFaces: detections.length,
-      face: bestMatch,
-    })
+    //   if (detections.length < 1) {
+    //     return setTimeout(() => this.onPlay())
+    //   }
 
-    // setTimeout(() => this.onPlay())
+    //   console.log(detections)
 
+    //   this.setState({
+    //     numFaces: detections.length,
+    //     expression: this.bestExpression(detections[0].expressions),
+    //   })
+    // }
+    setTimeout(() => this.onPlay())
   }
 
   render() {
     return (
       <div className="intro">
         <h1>Benji</h1>
-
-        <div id="container">
           <video id="inputVideo" ref="video" autoPlay={true} muted></video>
-          <canvas id="overlay" ref="canvas" />
-        </div>
         <h2>
-          { this.state.numFaces == null ? "Detecting..." : `${this.state.numFaces} faces detected` }
+          { this.state.numFaces == null ? "Setting up..." : `${this.state.numFaces} faces detected` }
         </h2>
         <h2>
-          { this.state.numFaces != null && `Best match: ${this.state.face}` }
+          { this.state.face != null && `Indentified as: ${this.state.face}` }
+        </h2>
+        <h2>
+          { this.state.expression != null && `Expression: ${this.state.expression}` }
         </h2>
       </div>
     );
