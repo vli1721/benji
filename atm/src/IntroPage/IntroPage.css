@@ -4,3 +4,7 @@
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
+
+#brand {
+	font-size: 3em;
+}

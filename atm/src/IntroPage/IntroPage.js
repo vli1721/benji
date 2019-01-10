@@ -72,7 +72,6 @@ class IntroPage extends Component {
       /* handle the error */
       console.log(err);
     });
-    this.speak('Welcome to Benji! Smile to activate.')
     this.onPlay();
   }
 
@@ -81,6 +80,12 @@ class IntroPage extends Component {
     var voices = window.speechSynthesis.getVoices()
     msg.voice = voices[50]
     window.speechSynthesis.speak(msg)
+  }
+
+  componentDidUpdate = (prevProps, prevState, snapshot) => {
+    if (prevState.numFaces == null && this.state.numFaces != null) {
+      this.speak('Welcome to Benji!');
+    }
   }
 
   bestExpression = (expressions) => {
@@ -144,9 +149,28 @@ class IntroPage extends Component {
   }
 
   render() {
+
+    let emoji = '🥳';
+    switch (this.state.expression) {
+      case "neutral":
+        emoji = '🥳';
+        break;
+      case "happy":
+        emoji = '😃';
+        break;
+      case "sad":
+        emoji = '😥';
+        break;
+      case "angry":
+        emoji = '😠';
+        break;
+      default:
+        emoji = '🥳';
+    }
+
     return (
       <div className="intro">
-        <h1>Benji</h1>
+        <h1 id="brand">{emoji} Benji</h1>
           <video id="inputVideo" ref="video" autoPlay={true} muted></video>
         <h2>
           { this.state.numFaces == null ? "Setting up..." : `${this.state.numFaces} faces detected` }
