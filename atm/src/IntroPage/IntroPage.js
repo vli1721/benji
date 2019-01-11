@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import FaceAuth from '../FaceAuth/FaceAuth.js'
 
-import { startGetBalance } from '../actions/settings';
+import { startGetBalance, startChangePage } from '../actions/settings';
 
 class IntroPage extends Component {
 
@@ -43,6 +43,10 @@ class IntroPage extends Component {
 
   async componentDidMount() {
     this.speak("Hi, my name's benji! How can I help?");
+  }
+
+  goToMain = () => {
+    this.props.history.push('/main');
   }
 
   speak = (message) => {
@@ -99,8 +103,5 @@ class IntroPage extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  getBalance: () => dispatch(startGetBalance()),
-});
 
-export default connect(undefined, mapDispatchToProps)(IntroPage);
+export default IntroPage;
