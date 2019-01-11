@@ -7,7 +7,7 @@
 
     >
 
-        <p style="margin: 20px; font-size: 4vw; text-align: center; display: inline" class="the-font">Balance: {{'$'+animatedNumber}}</p>
+        <p style="margin: 40px; font-size: 4vw; text-align: center; display: inline" class="the-font">Balance: {{'$'+animatedNumber}}</p>
 
     </v-sheet>
 </template>
@@ -18,7 +18,7 @@
         data() {
             return {
                 balance: 0,
-                ref: this.db.ref('users/bobby/balance'),
+                ref: this.db.ref('users/brian/balance'),
             }
         },
         mounted() {

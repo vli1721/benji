@@ -14,7 +14,7 @@
                     style="padding: 10px;"
             >
                 <div style="overflow-y: scroll; height: 150px; padding: 10px">
-                    <NI v-for="notif in notificationsList" :notif="notif" @remove="removeItem"></NI>
+                    <NI v-for="notif in notificationsList" :notif="notif" @changeVerify = "changeVerify" @remove="removeItem"></NI>
                 </div>
             </v-sheet>
         </div>
@@ -37,44 +37,76 @@
             return {
                 // someway push notif objects into this list
                 notificationsList: [], 
-                ref: this.db.ref('users/bobby')
+                ref: this.db.ref('users/brian')
             }
         },
         methods: {
             removeItem(id) {
                 for (var i = 0; i < this.notificationsList.length; ++i) {
                     if (id === this.notificationsList[i].id) {
+                        console.log("hi");
                         this.notificationsList.splice(i, 1);
                         break
                     }
                 }
+
+
             },
+            changeVerify(b){
+                const vm = this;
+                this.ref.on("value", function (snapshot) {
+                console.log('hi')
+                // console.log(snapshot.val()['chores'])
+                    for (var x in snapshot.val()['chores']) {
+                        var obj = snapshot.val()['chores'][x];
+                        console.log(obj)
+                        console.log(b)
+
+                        if (obj.id.toString() === b.toString()) {
+                            var postsRef = vm.ref.child("chores");
+                            var date = new Date();
+                            var choreObj = {
+                                description: obj.description,
+                                reward: obj.reward,
+                                id: obj.id,
+                                verify: true,
+                                completed: true
+                            };
+                            
+                            console.log("hsdadai");
+                            // var newPostRef = postsRef.push();
+                            // newPostRef.set(choreObj);
+                            
+                        }
+                    }
+                    console.log(vm.notificationsList)
+                },
+                function (errorObject) {
+                    console.log("The read failed: " + errorObject.code);
+                });
+            }
 
 
         },
         mounted() {
-            //retrieve just added node
-            
             const vm = this;
             this.ref.on("value", function (snapshot) {
-                console.log('hi')
-                vm.notificationsList = []
+                vm.notificationsList= []
                     for (var x in snapshot.val()['chores']) {
                         var obj = snapshot.val()['chores'][x];
-                        if (!obj.completed) {
+                        if (obj.completed) {
                             vm.notificationsList.push(
                                 {
                                     description: obj.description,
                                     reward: obj.reward,
                                     id: obj.id,
                                     verify: obj.false,
-                                    completed: obj.false
+                                    completed: obj.true
                                 }
                             )
                         
                     }
                     }
-                    console.log(vm.notificationsList)
                 },
                 function (errorObject) {
                     console.log("The read failed: " + errorObject.code);

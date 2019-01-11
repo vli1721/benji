@@ -4,7 +4,7 @@
             <p style="margin: 0">{{this.notif.description}}</p>
         </div>
         <div class="b-group">
-            <button class="confirm"><i class="fas fa-check"></i></button>
+            <button class="confirm" @click="verifyClick"><i class="fas fa-check"></i></button>
             <button class="deny" @click="handleClick"><i class="fas fa-ban"></i></button>
         </div>
 
@@ -21,6 +21,9 @@
         methods: {
             handleClick(){
                 this.$emit('remove', this.notif.id)
+            }, 
+            verifyClick(){
+                this.$emit('changeVerify', this.notif.id)
             }
         }
 

@@ -33,8 +33,6 @@
 </template>
 
 <script>
-
-
     export default {
         props: ['db'],
         data() {
@@ -43,7 +41,7 @@
                 rewardInput: '',
                 // pull from firebase to fill array
                 choresList: [],
-                ref: this.db.ref('users/bobby')
+                ref: this.db.ref('users/brian')
             }
         },
         mounted() {
@@ -86,7 +84,7 @@
                 var date = new Date();
                 var choreObj = {
                     description: this.choreInput,
-                    reward: "10",
+                    reward: this.rewardInput,
                     id: date.toString(),
                     verify: false,
                     completed: false
@@ -106,13 +104,12 @@
                 }
                 //server
                 const vm = this;
-                ref.on("value", function (snapshot) {
-
-                    // console.log(snapshot.val());
+                this.ref.on("value", function (snapshot) {
+                    console.log(snapshot.val());
                     for (var x in snapshot.val()['chores']) {
                         var obj = snapshot.val()['chores'][x];
                         if (obj.id === id) {
-                            var deleteRef = Firebase.database().ref('users/bobby/chores/' + x);
+                            var deleteRef = vm.db.ref('users/brian/chores/' + x);
                             deleteRef.remove().then(function () {
                             }).catch(function (e) {
                                 console.log('OOPS, problem: ' + e.message);
@@ -134,14 +131,10 @@
     .hoverable:hover {
         opacity: .8;
     }
-
     .delete-btn:hover i{
         color: red;
     }
-
     .add-btn:hover i{
         color: lightgreen;
     }
-
-
 </style>
