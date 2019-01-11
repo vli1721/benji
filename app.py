@@ -98,6 +98,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 		# print(curr_action)
 
 		chores_list = db.child("users").child(username).child("chores").get()
+		chore_found = False
 		for chore in chores_list.each():
 			chore_desc = str(chore.val()["description"])
 			# print(chore_desc)
@@ -105,9 +106,13 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 			if curr_chore in chore_desc and (curr_action in chore_desc or chore_desc.split()[0] in curr_action):
 				db.child("users").child("brian").child("chores").child(chore.key()).update({ "completed": True })
 				# print("completed " + chore_desc)
+				chore_found = True
 				break
 
-		return { "status": 200, "message": "Chore completed. Awesome job!" }
+		if chore_found:
+			return { "status": 200, "message": "Chore completed. Awesome job!" }
+		else:
+			return { "status": 400, "message": "I'm sorry. Are you sure you completed " + str(curr_action) + " " + str(curr_chore) + "?" }
 
 
 
