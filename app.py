@@ -21,9 +21,9 @@ config = {
 }
 
 
-session_client = dialogflow.SessionsClient()
-DIALOGFLOW_PROJECT_ID = "benji-42f8d"
-DIALOGFLOW_LANGUAGE_CODE = "en"
+# session_client = dialogflow.SessionsClient()
+# DIALOGFLOW_PROJECT_ID = "benji-42f8d"
+# DIALOGFLOW_LANGUAGE_CODE = "en"
 
 firebase = pyrebase.initialize_app(config)
 
@@ -64,15 +64,20 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
 	# Only take action if inent detection confidence is over 80%
 	if detect_confidence > 0.8:
-		curr_user = db.child("users").child(username).get()
 
-		# Update current balance
-		current_balance = float(curr_user.val()["balance"])
 		if transaction_type == "Deposit":
+			curr_user = db.child("users").child(username).get()
+
+			# Update current balance
+			current_balance = float(curr_user.val()["balance"])
 			transaction_amount = float(response.query_result.parameters["currency_amount"]["amount"])
 			current_balance += transaction_amount
 			db.child("users").child(username).update({ "balance": current_balance })
 		elif transaction_type == "Withdraw":
+			curr_user = db.child("users").child(username).get()
+
+			# Update current balance
+			current_balance = float(curr_user.val()["balance"])
 			transaction_amount = float(response.query_result.parameters["currency_amount"]["amount"])
 			if current_balance >= transaction_amount:
 				current_balance -= transaction_amount
@@ -83,7 +88,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 		elif transaction_type == "Chore_Complete":
 
 			curr_chore = str(response.query_result.parameters["chore"])
-			chores_list = curr_user.val()["chores"]
+			chores_list = db.child("users").child(username).child("chores").get().val()
 			for key in chores_list:
 				print(key)
 				chore_desc = str(chores_list[key]["description"])
