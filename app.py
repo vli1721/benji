@@ -104,7 +104,15 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 			# print(chore_desc)
 			# print(chore_desc.split())
 			if curr_chore in chore_desc and (curr_action in chore_desc or chore_desc.split()[0] in curr_action):
-				db.child("users").child("brian").child("chores").child(chore.key()).update({ "completed": True })
+				# Update chore completion
+				db.child("users").child(username).child("chores").child(chore.key()).update({ "completed": True })
+
+				# Update current balance
+				current_balance = float(db.child("users").child(username).get().val()["balance"])
+				chore_amount = float(chore.val()["reward"])
+				current_balance += chore_amount
+				db.child("users").child(username).update({ "balance": current_balance })
+
 				# print("completed " + chore_desc)
 				chore_found = True
 				break
