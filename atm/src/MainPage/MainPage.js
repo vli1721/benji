@@ -33,11 +33,33 @@ class MainPage extends Component {
     ]
   }
 
+  componentDidUpdate = (prevProps, prevState, snapshot) => {
+    if (prevProps.user != this.props.user && this.props.user != null) {
+      this.props.watchBalance();
+      this.props.getChores();
+      this.props.getGoal();
+      this.props.getPrice();
+      this.speak('Welcome, ' + this.props.user)
+    }
+  }
+
+  speak = (message) => {
+      const msg = new SpeechSynthesisUtterance(message)
+
+      msg.onend = (event) => {
+        // this.setState({benjiSpeaking: false})
+        console.log('done speaking')
+      }
+
+      const voices = window.speechSynthesis.getVoices()
+      msg.voice = voices[50]
+      // this.setState({benjiSpeaking: true})
+      window.speechSynthesis.speak(msg)
+    }
+
   componentDidMount = () => {
-    this.props.watchBalance();
-    this.props.getChores();
-    this.props.getGoal();
-    this.props.getPrice();
+    
+    this.speak("Hi, I'm Benji!")
 
     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
     this.recognition = new window.SpeechRecognition();
@@ -88,15 +110,19 @@ class MainPage extends Component {
           contentType: "application/json; charset=utf-8",
           dataType: "json"
         })
-        .done(() => {
+        .done((res) => {
           // this.props.speak("Done")
+          console.log(res)
         })
         .fail(() => {
           // this.props.speak("Sorry I don't understand")
         })
-        .always(() => {
-          // alert( "posted to backend" );
-          console.log("PLEASE")
+        .always((data) => {
+          console.log(data.responseText)
+          if (data.status == 200) {
+            this.speak(data.responseText);
+          }
+          
           this.setState({
             finalTranscript: "",
           })
@@ -110,7 +136,7 @@ class MainPage extends Component {
 
   render() {
     return (
-      <div className='mainPage'>
+      <div className='mainPage' style={{display: this.props.visible == true ? 'block' : 'none'}}>
         <div className='main-container'>
           <div className='left-container'>
             <Balance />

@@ -20,7 +20,7 @@ const Goal = (props) => {
     return (
         <div className='goal-outer'>
             <div className='goal-inner'>
-                <h1 className="goal-title">{props.balance >= props.goal && '🎉'}{props.goal}{props.balance >= props.goal && '🎉'}</h1>
+                <h1 className="goal-title">{props.balance >= props.goalPrice && '🎉 '}${props.goalPrice + ' ' + props.goal}{props.balance >= props.goalPrice && ' 🎉'}</h1>
                 <div className="coin-container">
                     {coins}
                 </div>

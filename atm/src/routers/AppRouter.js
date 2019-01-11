@@ -14,37 +14,7 @@ import { startGetPage, startGetBalance } from '../actions/settings';
 
 class AppRouter extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      benjiSpeaking: false,
-    }
-  }
-
-  componentDidMount = () => {
-    this.speak("Hi, my name's Benji!");
-  }
-
-  speak = (message) => {
-    const msg = new SpeechSynthesisUtterance(message)
-
-    msg.onend = (event) => {
-      this.setState({benjiSpeaking: false})
-      console.log('done speaking')
-    }
-
-    const voices = window.speechSynthesis.getVoices()
-    msg.voice = voices[50]
-    this.setState({benjiSpeaking: true})
-    window.speechSynthesis.speak(msg)
-  }
-
   benjiEmoji = () => {
-    // if (this.state.benjiSpeaking) {
-    //   return '😄';
-    // }
-
     let emoji = '🥳';
     switch (this.props.expression) {
       case "neutral":
@@ -58,6 +28,9 @@ class AppRouter extends Component {
         break;
       case "angry":
         emoji = '😠';
+        break;
+      case "surprised":
+        emoji = '😲';
         break;
       default:
         emoji = '🥳';
@@ -78,16 +51,7 @@ class AppRouter extends Component {
         <div id="brand-container">
           <h1 id="brand">{this.benjiEmoji()} Benji</h1>
         </div>
-        <Router history={this.props.history}>
-          <div>
-            <Route path="/" component={IntroPage} exact={true} />
-            <Route
-              id="mainRoute"
-              path='/main'
-              render={(props) => <MainPage {...props} speak={this.speak} />}
-            />
-          </div>
-        </Router>
+        <MainPage visible={this.props.user != null} />
         <FaceAuth visible={this.props.user == null}/>
       </div>
     )

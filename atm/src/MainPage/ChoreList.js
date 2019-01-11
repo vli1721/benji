@@ -12,6 +12,8 @@ const ChoreList = (props) => {
         />        
     });
 
+    console.log(props.chores)
+
     return (
         <div className='chore-container'>
             <h1 className='chore-title'>Chore List</h1>

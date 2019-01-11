@@ -39,23 +39,26 @@ class FaceAuth extends Component {
     console.log('unmounting!!')
   }
    
-  componentWillReceiveProps = (nextProps) => {
-    if(this.props.user != nextProps.user && nextProps.user !== null) {
-      console.log('routed')
-      history.push('/main')
-    }
-    if(this.props.user == null || this.props.numFaces > 1) {
-      console.log('routed')
-      history.push('/')
-    }
-  }
+  // componentWillReceiveProps = (nextProps) => {
+  //   if(this.props.user != nextProps.user && nextProps.user !== null) {
+  //     console.log('routed')
+  //     history.push('/main')
+  //   }
+  //   if(this.props.user == null || this.props.numFaces > 1) {
+  //     console.log('routed')
+  //     history.push('/')
+  //   }
+  // }
 
-  componentDidUpdate = (prevProps, prevState, snapshot) => {
-    if (this.props.user != null && prevProps.user == null) {
-      console.log('routed');
-      history.push('/main');
-    }
-  }
+  // componentDidUpdate = (prevProps, prevState, snapshot) => {
+  //   if (this.props.user != null && prevProps.user == null) {
+  //     console.log('routed');
+  //     history.push('/main');
+  //   } else if(this.props.user == null || this.props.numFaces > 1) {
+  //     console.log('routed')
+  //     history.push('/')
+  //   }
+  // }
 
 	async loadModels () {
     await faceapi.loadFaceDetectionModel(MODEL_URL);
