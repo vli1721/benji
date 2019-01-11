@@ -29,33 +29,20 @@
 </template>
 
 <script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyDa8Xluwh_e0fp-vVjyoZxDqekd7IcAoCk",
-        authDomain: "benji-42f8d.firebaseapp.com",
-        databaseURL: "https://benji-42f8d.firebaseio.com",
-        projectId: "benji-42f8d",
-        storageBucket: "benji-42f8d.appspot.com",
-        messagingSenderId: "533301633340"
-    };
-    if (!firebase.apps.length) {
-        var database = firebase.database();
-        var ref = firebase.database().ref('users/bobby');
-    }
-
-
     export default {
+        props: ['db'],
         data() {
             return {
                 choreInput: '',
                 // pull from firebase to fill array
                 choresList: [],
+                ref: this.db.ref('users/bobby/chores')
             }
         },
         mounted() {
             //retrieve just added node
             const vm = this;
-            ref.on("value", function (snapshot) {
+            this.ref.on("value", function (snapshot) {
                     for (var x in snapshot.val()['chores']) {
                         var obj = snapshot.val()['chores'][x];
                         if (!vm.choresList.includes(obj)) {
@@ -83,7 +70,7 @@
                     id: this.choresList.length
                 };
                 //server
-                var postsRef = ref.child("chores");
+                var postsRef = this.ref.child("chores");
                 var newPostRef = postsRef.push();
                 console.log(newPostRef);
                 newPostRef.set(choreObj);
@@ -104,14 +91,16 @@
                 //server
                 const vm = this;
 
-                ref.on("value", function (snapshot) {
+                this.ref.on("value", function (snapshot) {
                     console.log('HEREEEE')
                     // console.log(snapshot.val());
 
                     for (var x in snapshot.val()['chores']) {
                         var obj = snapshot.val()['chores'][x];
                         if (obj.id === id) {
-                            var deleteRef = firebase.database().ref('users/bobby/chores/' + x);
+                            var deleteRef = vm.db.ref('users/bobby/chores/' + x);
+                            console.log('in here')
+                            console.log(deleteRef)
                             deleteRef.remove().then(function () {
                                 console.log('OK, gone');
                             }).catch(function (e) {
