@@ -6,7 +6,8 @@
 
     >
 
-        <p style="margin: 20px; font-size: 4vw; text-align: center">Balance: {{'$'+balance}}</p>
+        <p style="margin: 20px; font-size: 4vw; text-align: center">Balance: {{'$'+animatedNumber}}</p>
+
         <p style="margin: 20px; font-size: 4vw; text-align: center">Almost to goal of 40</p>
 
     </v-sheet>
@@ -18,16 +19,21 @@
         data() {
             return {
                 balance: 0,
-                ref: this.db.ref('users/bobby/balance')
+                ref: this.db.ref('users/bobby/balance'),
             }
         },
         mounted() {
-            console.log('hi')
-            console.log(this.db)
+            var vm = this;
             this.ref.on("value", function (snapshot) {
-                console.log('');
-                // this.balance = snapshot.val()
+                // vm.number = snapshot.val()
+                TweenLite.to(vm.$data, 0.5, { balance: snapshot.val() });
+
             });
+        },
+        computed: {
+            animatedNumber: function() {
+                return this.balance.toFixed(0);
+            }
         }
     }
 </script>
