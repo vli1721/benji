@@ -11,7 +11,7 @@ import dialogflow_v2 as dialogflow  # Dialogflow Python SDK
 app = Flask(__name__)
 CORS(app) # enable cross-origin requests
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "benji-079497d6e906.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "benji-079497d6e906.json"
 
 config = {
   "apiKey": "AIzaSyDa8Xluwh_e0fp-vVjyoZxDqekd7IcAoCk",
@@ -72,7 +72,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 def post_stt():
 	request_json = request.get_json()
 	print(request_json)
-	texts = "My name is " + str(request_json.name) + ". " + request_json.query
+	texts = "My name is " + str(request_json["name"]) + ". " + str(request_json["query"])
 	detect_intent_texts(DIALOGFLOW_PROJECT_ID, 1, texts, DIALOGFLOW_LANGUAGE_CODE)
 	return "Request received post_stt"
 
