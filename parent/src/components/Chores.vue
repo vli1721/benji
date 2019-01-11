@@ -29,28 +29,8 @@
 </template>
 
 <script>
-<<<<<<< Updated upstream
-=======
-import Firebase from 'firebase'
-    // Initialize Firebase
-    // var config = {
-    //     apiKey: "AIzaSyDa8Xluwh_e0fp-vVjyoZxDqekd7IcAoCk",
-    //     authDomain: "benji-42f8d.firebaseapp.com",
-    //     databaseURL: "https://benji-42f8d.firebaseio.com",
-    //     projectId: "benji-42f8d",
-    //     storageBucket: "benji-42f8d.appspot.com",
-    //     messagingSenderId: "533301633340"
-    // };
-    // let app = Firebase.initializeApp(config)
-    // let db = app.database()
-    // let ref = db.ref('users')
-    // if (!firebase.apps.length) {
-    //     var database = firebase.database();
-    //     var ref = firebase.database().ref('users/bobby');
-    // }
 
 
->>>>>>> Stashed changes
     export default {
         props: ['db'],
         data() {
@@ -68,7 +48,6 @@ import Firebase from 'firebase'
                 vm.choresList = []
                     for (var x in snapshot.val()['chores']) {
                         var obj = snapshot.val()['chores'][x];
-
                         if (!vm.choresList.includes(x)) {
                             vm.choresList.push(
                                 {
@@ -78,13 +57,10 @@ import Firebase from 'firebase'
                                     verify: obj.false,
                                     completed: obj.false
                                 }
-
                             )
                         
                     }
-
                     }
-
                 },
                 function (errorObject) {
                     console.log("The read failed: " + errorObject.code);
@@ -109,18 +85,11 @@ import Firebase from 'firebase'
                     id: date.toString(),
                     verify: false,
                     completed: false
-
                 };
                 
                 console.log(choreObj);
-
                 var newPostRef = postsRef.push();
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
                 newPostRef.set(choreObj);
-
                 //client
                 // this.choresList.push(
                 //     choreObj
@@ -136,25 +105,13 @@ import Firebase from 'firebase'
                 }
                 //server
                 const vm = this;
-
-<<<<<<< Updated upstream
-                this.ref.on("value", function (snapshot) {
-                    console.log('HEREEEE')
-=======
                 ref.on("value", function (snapshot) {
->>>>>>> Stashed changes
-                    // console.log(snapshot.val());
 
+                    // console.log(snapshot.val());
                     for (var x in snapshot.val()['chores']) {
                         var obj = snapshot.val()['chores'][x];
                         if (obj.id === id) {
-<<<<<<< Updated upstream
-                            var deleteRef = vm.db.ref('users/bobby/chores/' + x);
-                            console.log('in here')
-                            console.log(deleteRef)
-=======
                             var deleteRef = Firebase.database().ref('users/bobby/chores/' + x);
->>>>>>> Stashed changes
                             deleteRef.remove().then(function () {
                             }).catch(function (e) {
                                 console.log('OOPS, problem: ' + e.message);
@@ -162,8 +119,6 @@ import Firebase from 'firebase'
                             break;
                         }
                     }
-
-
                 }, function (errorObject) {
                     console.log("The read failed: " + errorObject.code);
                 });
@@ -171,12 +126,10 @@ import Firebase from 'firebase'
         },
     }
 </script>
-
 <style>
     .addChore {
         display: flex;
     }
-
     .hoverable:hover {
         opacity: .8;
     }
