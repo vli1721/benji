@@ -2,6 +2,7 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from flask_session import Session
 from flask_cors import CORS
 import os
+import json
 
 import pyrebase  # Python firebase API
 
@@ -21,9 +22,9 @@ config = {
 }
 
 
-session_client = dialogflow.SessionsClient()
-DIALOGFLOW_PROJECT_ID = "benji-42f8d"
-DIALOGFLOW_LANGUAGE_CODE = "en"
+# session_client = dialogflow.SessionsClient()
+# DIALOGFLOW_PROJECT_ID = "benji-42f8d"
+# DIALOGFLOW_LANGUAGE_CODE = "en"
 
 firebase = pyrebase.initialize_app(config)
 
@@ -59,7 +60,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
 	username = str(response.query_result.parameters["name"]).lower()  # Convert username to lowercase
 	transaction_type = str(response.query_result.intent.display_name)
-	print(response.query_result.fulfillment_text)
+	# print(response.query_result.fulfillment_text)
 	detect_confidence = float(response.query_result.intent_detection_confidence)
 
 	# Only take action if intent detection confidence is over 80% for deposits and withdrawals
@@ -73,7 +74,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 		current_balance += transaction_amount
 		db.child("users").child(username).update({ "balance": current_balance })
 
-		return "Deposit completed"
+		return { "status": 200, "message": "Deposit completed. You are on your way to your goal!" }
 
 	elif transaction_type == "Withdraw" and detect_confidence > 0.8:
 		curr_user = db.child("users").child(username).get()
@@ -85,35 +86,33 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 			current_balance -= transaction_amount
 			db.child("users").child(username).update({ "balance": current_balance })
 		else:
-			print("Error: not enough money in account")
-			return "Error: not enough money in account"
+			return {"status": 400, "message": "Benji is sorry. You do not have enough money to withdraw." }
 
-		return "Withdrawal completed"
+		return { "status": 200, "message": "Withdrawal completed. Here is your money!" }
 
 
 	elif transaction_type == "Chore_Complete" and detect_confidence > 0.4:
 		curr_chore = str(response.query_result.parameters["chore"][0])
 		curr_action = str(response.query_result.parameters["action"][0])
-		print(curr_chore)
-		print(curr_action)
+		# print(curr_chore)
+		# print(curr_action)
 
 		chores_list = db.child("users").child(username).child("chores").get()
 		for chore in chores_list.each():
 			chore_desc = str(chore.val()["description"])
-			print(chore_desc)
-			print(chore_desc.split())
+			# print(chore_desc)
+			# print(chore_desc.split())
 			if curr_chore in chore_desc and (curr_action in chore_desc or chore_desc.split()[0] in curr_action):
 				db.child("users").child("brian").child("chores").child(chore.key()).update({ "completed": True })
-				print("completed " + chore_desc)
+				# print("completed " + chore_desc)
 				break
 
-		return "Chore completed"
+		return { "status": 200, "message": "Chore completed. Awesome job!" }
 
 
 
 	else:
-		print("Intent detection confidence is too low (" + str(detect_confidence) + ")")
-		return "Error: intent detection confidence is too low"
+		return {"status": 400, "message": "Benji is sorry he did not understand you."}
 
 	# print('Query text: {}'.format(response.query_result.query_text))
 	# print('Detected intent: {} (confidence: {})\n'.format(
@@ -128,8 +127,8 @@ def post_stt():
 	request_json = request.get_json()
 	# print(request_json)
 	texts = "My name is " + str(request_json["name"]) + ". " + str(request_json["query"])
-	detect_intent_texts(DIALOGFLOW_PROJECT_ID, 1, texts, DIALOGFLOW_LANGUAGE_CODE)
-	return "Request received post_stt"
+	ret_dict = detect_intent_texts(DIALOGFLOW_PROJECT_ID, 1, texts, DIALOGFLOW_LANGUAGE_CODE)
+	return json.dumps(ret_dict)
 
 
 
