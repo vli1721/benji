@@ -79,10 +79,23 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 			else:
 				print("Error: not enough money in account")
 				return "Error: not enough money in account"
-		# elif transaction_type == "Chore_Complete":
+		elif transaction_type == "Chore_Complete":
+
+			curr_chore = str(response.query_result.parameters["chore"])
+			chores_list = curr_user.val()["chores"]
+			for chore in chores_list:
+				chore_desc = str(chore["description"])
+				if curr_chore in chore_desc:
+					db.child("users").child(username).child(chore_desc).update({ "completed": True })
+					print("completed " + chore_desc)
+					break
+
+			print("invalid chore")
+
+
 		# 	# TODO
 
-		return "Balance updated"
+		return "Action completed"
 
 	else:
 		print("Intent detection confidence is too low (" + str(detect_confidence) + ")")
