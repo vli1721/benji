@@ -46,7 +46,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 	of the conversation."""
 
 	session = session_client.session_path(project_id, session_id)
-	print('Session path: {}\n'.format(session))
+	# print('Session path: {}\n'.format(session))
 
 	text_input = dialogflow.types.TextInput(
 		text=texts, language_code=language_code)
