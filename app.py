@@ -36,7 +36,7 @@ db = firebase.database()
 
 @app.route("/", methods=["GET"])
 def index():
-	return render_template("stt_test.html")
+	return render_template("index.html")
 
 
 def detect_intent_texts(project_id, session_id, texts, language_code):
