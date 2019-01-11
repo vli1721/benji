@@ -60,6 +60,10 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
     print('=' * 20)
     print(response)
+    print(response.query_result.parameters)
+    print(response.query_result.fulfillment_text)
+    print(response.query_result.intent.display_name)
+    print(response.query_result.intent.intent_detection_confidence)
     # print('Query text: {}'.format(response.query_result.query_text))
     # print('Detected intent: {} (confidence: {})\n'.format(
     #     response.query_result.intent.display_name,
@@ -68,24 +72,14 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
     #     response.query_result.fulfillment_text))
 
 
-# @app.route("/post_stt", methods=["POST"])
-# def post_stt():
-# 	request_json = request.get_json()
-# 	# print(request_json)
-# 	texts = "My name is " + str(request_json["name"]) + ". " + str(request_json["query"])
-# 	detect_intent_texts(DIALOGFLOW_PROJECT_ID, 1, texts, DIALOGFLOW_LANGUAGE_CODE)
-# 	return "Request received post_stt"
+@app.route("/post_stt", methods=["POST"])
+def post_stt():
+	request_json = request.get_json()
+	# print(request_json)
+	texts = "My name is " + str(request_json["name"]) + ". " + str(request_json["query"])
+	detect_intent_texts(DIALOGFLOW_PROJECT_ID, 1, texts, DIALOGFLOW_LANGUAGE_CODE)
+	return "Request received post_stt"
 
-
-# @app.route("/update_db", methods=["POST"])
-# def update_db():
-# 	request_json = request.get_json()
-# 	print(request_json)
-
-# 	# request_json["queryResult"]["parameters"]["unit-currency"]
-
-# 	# chores.child(chore).update({"completed": True})
-# 	return "Request received"
 
 
 if __name__ == "__main__":
