@@ -1,0 +1,30 @@
+.balance-container {
+    background-color: #3ec1d3;
+    padding: 3rem;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .2);
+}
+
+
+.balance {
+    display: block;
+	font-size: 10em;
+    color: white;
+    margin: 0;
+    
+}
+
+.balance-tag {
+    margin: 0;
+    text-align: left;
+    font-size: 2.5rem;
+    font-family: "Montserrat";
+    color: white;
+}
+
+.container {
+    width: 100%;
+}
