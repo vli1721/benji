@@ -152,10 +152,10 @@ class MainPage extends Component {
         <div className='main-container'>
           <div className='left-container'>
             <Balance />
-            <ChoreList />
+            <Goal />
           </div>
           <div className='right-container'>
-            <Goal />
+            <ChoreList />
           </div>
         </div>
         

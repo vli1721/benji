@@ -151,7 +151,8 @@ class FaceAuth extends Component {
 
       console.log(bestMatch.toString())
       const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? null : bestMatch.label
-      
+
+      if (face != null)
         this.props.changeUser(face);
       this.props.changeNumFaces(detections.length)
       this.props.changeExpression(this.bestExpression(detections[0].expressions))
