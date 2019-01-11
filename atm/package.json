@@ -10,6 +10,7 @@
     "face-api.js": "^0.17.1",
     "firebase": "^5.7.2",
     "history": "^4.7.2",
+    "jquery": "^3.3.1",
     "react": "^16.7.0",
     "react-clock": "^2.3.0",
     "react-dom": "^16.7.0",

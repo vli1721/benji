@@ -13,6 +13,7 @@
 .right-container {
     /*flex-grow: 1;*/
     margin-left: 2rem;
+    padding-bottom: 1rem;
     width: 50%;
 }
 

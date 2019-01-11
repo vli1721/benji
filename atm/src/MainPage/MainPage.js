@@ -7,6 +7,7 @@ import jQuery from 'jquery';
 import Balance from './Balance';
 import ChoreList from './ChoreList';
 import Goal from './Goal';
+import Clock from './Clock';
 import { watchBalance, startGetGoal, startGetGoalPrice } from '../actions/settings';
 import { watchVerifyChore, watchChores, startGetChores } from '../actions/chores';
 
@@ -121,15 +122,15 @@ class MainPage extends Component {
         .done((res) => {
           // this.props.speak("Done")
           console.log(res)
-          this.speak(res.message, () => {
-            // this.recognition.start()
-          });
+          // this.speak(res.message, () => {
+          //   // this.recognition.start()
+          // });
         })
         .fail((res) => {
           // console.log(res)
-          this.speak("Sorry, I don't understand", () => {
-            // this.recognition.start()
-          })
+          // this.speak("Sorry, I don't understand", () => {
+          //   // this.recognition.start()
+          // })
         })
         .always((data) => {
           this.setState({
