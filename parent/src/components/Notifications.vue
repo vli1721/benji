@@ -50,6 +50,24 @@
                     }
                 }
 
+                const vm = this;
+                this.ref.on("value", function (snapshot) {
+                    console.log(snapshot.val());
+                    for (var x in snapshot.val()['chores']) {
+                        var obj = snapshot.val()['chores'][x];
+                        if (obj.id === id) {
+                            var deleteRef = vm.db.ref('users/brian/chores/' + x);
+                            deleteRef.remove().then(function () {
+                            }).catch(function (e) {
+                                console.log('OOPS, problem: ' + e.message);
+                            });
+                            break;
+                        }
+                    }
+                }, function (errorObject) {
+                    console.log("The read failed: " + errorObject.code);
+                });
+
 
             },
             changeVerify(b){
