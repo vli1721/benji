@@ -26,18 +26,26 @@ class FaceAuth extends Component {
 		  expression: null,
 		  threshold: 0.4,
 		  balance: 42.00,
+      timeout: null,
 		}
+
+    this._isMounted = false;
 
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.onPlay = this.onPlay.bind(this);
    }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
    
-   componentWillReceiveProps(nextProps) {
-     if(this.props.user) {
-        console.log('routed')
-        history.push('/main')
-     }
-   }
+  componentWillReceiveProps = (nextProps) => {
+    if(this.props.user) {
+      clearTimeout(this.state.timeout);
+      console.log('routed')
+      history.push('/main')
+    }
+  }
 
 	 async loadModels () {
     await faceapi.loadFaceDetectionModel(MODEL_URL);
@@ -86,7 +94,9 @@ class FaceAuth extends Component {
       /* handle the error */
       console.log(err);
     });
-    this.onPlay();
+
+    this._isMounted = true;
+    this._isMounted && this.onPlay();
   }
 
   bestExpression = (expressions) => {
@@ -106,7 +116,7 @@ class FaceAuth extends Component {
     const input = this.refs.video;
 
     if(!input.currentTime || input.paused || input.ended)
-        return setTimeout(() => this.onPlay())
+        return
 
     // if (this.state.expression == "happy") {
       const detections = await faceapi.detectAllFaces(input, new faceapi.TinyFaceDetectorOptions({minFaceSize: 75}))
@@ -128,7 +138,8 @@ class FaceAuth extends Component {
       this.props.changeUser(face)
       this.props.changeNumFaces(detections.length)
       this.props.changeExpression(this.bestExpression(detections[0].expressions))
-      setTimeout(() => this.onPlay())
+      const timeout = this._isMounted && setTimeout(() => this.onPlay())
+      this.setState({timeout: timeout})
   }
 
   render() {
@@ -136,7 +147,7 @@ class FaceAuth extends Component {
     return (
       <div className="face-auth">
         <Paper id="brand-container" elevation={1}>
-          <video id="inputVideo" ref="video" autoPlay={true} muted></video>
+          <video id="inputVideo" ref="video" onPlay={this.onPlay} autoPlay={true} muted></video>
         </Paper>
         <Grid container spacing={24} className="grid">
           <Grid item xs={4}>
@@ -146,7 +157,7 @@ class FaceAuth extends Component {
           </Grid>
           <Grid item xs={4}>
             <h2>
-              { this.props.numFaces == null ? "Loading..." : `Indentified as: ${this.props.user == null ? "unknown" : this.props.user}` }
+              { this.props.numFaces == null ? "Recognizing User..." : `Indentified as: ${this.props.user == null ? "unknown" : this.props.user}` }
             </h2>
           </Grid>
           <Grid item xs={4}>
