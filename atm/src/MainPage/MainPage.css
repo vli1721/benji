@@ -1,3 +1,14 @@
 .mainPage {
     padding: 3rem;
+    padding-top: 0;
+    text-align: center;
+}
+
+.grid {
+	width: 60%;
+}
+
+#balance {
+	font-size: 10em;
+	margin: 10px;
 }

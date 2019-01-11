@@ -70,18 +70,19 @@ class AppRouter extends Component {
       <div>
         <AppBar position="static">
           <Toolbar>
-            <Typography variant="h6" color="inherit">
+            <Typography id="bar-brand" variant="h6" color="inherit">
               {this.benjiEmoji()} Benji
             </Typography>
           </Toolbar>
         </AppBar>
-        <Paper id="brand-container" elevation={1}>
+        <div id="brand-container">
           <h1 id="brand">{this.benjiEmoji()} Benji</h1>
-        </Paper>
+        </div>
         <Router history={this.props.history}>
           <div>
             <Route path="/" component={IntroPage} exact={true} />
             <Route
+              id="mainRoute"
               path='/main'
               render={(props) => <MainPage {...props} speak={this.speak} />}
             />

@@ -5,8 +5,11 @@ import styles from './Balance.module.css';
 
 const Balance = (props) => {
     return (
-        <div className={styles['balance']}>
-            <span>{props.balance}</span>
+    	<div>
+	        <h1 id="balance">
+	            ${props.balance}
+	        </h1>
+        	<h3>Your balance</h3>
         </div>
     )
 }

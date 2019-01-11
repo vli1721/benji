@@ -23,7 +23,6 @@ class MainPage extends Component {
   render() {
     return (
       <div className="mainPage">
-        <h1>Main page</h1>
         <Balance />
         <ChoreList />
         <Goal />
