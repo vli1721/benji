@@ -32,34 +32,23 @@
 
     recognition.onend = (event) => {
       alert(finalTranscript);
-    //   $.post("http://ec2-3-85-164-61.compute-1.amazonaws.com/post_stt", { name: "John", text: finalTranscript }, function() {alert("success")}, "application/json")
-    //   .done(function() {
-    //       alert( "second success" );
-    //   })
-    //   .fail(function() {
-    //     alert( "error" );
-    //   })
-    //   .always(function() {
-    //     alert( "finished" );
-    //   });
-    // }
+
       $.ajax({
         type: "POST",
         url: "http://ec2-3-85-164-61.compute-1.amazonaws.com/post_stt",
-        data: JSON.stringify({ name: "John", text: "finalTranscript" }),
+        data: JSON.stringify({ name: "Brian", query: finalTranscript }),
         contentType: "application/json; charset=utf-8",
         dataType: "json"
       })
-      .done(function() {
-          alert( "done" );
-      })
-      .fail(function() {
-        alert( "error" );
-      })
+      // .done(function() {
+      //     alert( "done" );
+      // })
+      // .fail(function() {
+      //   alert( "error" );
+      // })
       .always(function() {
-        alert( "finished" );
+        alert( "posted to backend" );
       });
-
     }
 
     recognition.start();
