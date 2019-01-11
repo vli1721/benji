@@ -21,9 +21,9 @@ config = {
 }
 
 
-session_client = dialogflow.SessionsClient()
-DIALOGFLOW_PROJECT_ID = "benji-42f8d"
-DIALOGFLOW_LANGUAGE_CODE = "en"
+# session_client = dialogflow.SessionsClient()
+# DIALOGFLOW_PROJECT_ID = "benji-42f8d"
+# DIALOGFLOW_LANGUAGE_CODE = "en"
 
 firebase = pyrebase.initialize_app(config)
 
@@ -62,7 +62,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 	print(response.query_result.fulfillment_text)
 	detect_confidence = float(response.query_result.intent_detection_confidence)
 
-	# Only take action if inent detection confidence is over 80%
+	# Only take action if intent detection confidence is over 80%
 	if detect_confidence > 0.8:
 
 		if transaction_type == "Deposit":
@@ -85,21 +85,27 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 			else:
 				print("Error: not enough money in account")
 				return "Error: not enough money in account"
-		elif transaction_type == "Chore_Complete":
 
-			curr_chore = str(response.query_result.parameters["chore"])
-			chores_list = db.child("users").child(username).child("chores").get()
-			for chore in chores_list.each():
-				print(chore.key())
-				print(chore.val())
-				chore_desc = str(chore.val()["description"])
-				print(chore_desc)
-				if curr_chore in chore_desc:
-					db.child("users").child("brian").child("chores").child(chore.key()).update({ "completed": True })
-					print("completed " + chore_desc)
-					break
 
-		return "Action completed"
+		return "Deposit/Withdrawal completed"
+
+
+	elif transaction_type == "Chore_Complete" and detect_confidence > 0.4:
+		curr_chore = str(response.query_result.parameters["chore"])
+		chores_list = db.child("users").child(username).child("chores").get()
+		for chore in chores_list.each():
+			print(chore.key())
+			print(chore.val())
+			chore_desc = str(chore.val()["description"])
+			print(chore_desc)
+			if curr_chore in chore_desc:
+				db.child("users").child("brian").child("chores").child(chore.key()).update({ "completed": True })
+				print("completed " + chore_desc)
+				break
+
+		return "Chore completed"
+
+
 
 	else:
 		print("Intent detection confidence is too low (" + str(detect_confidence) + ")")
