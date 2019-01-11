@@ -14,6 +14,7 @@
 
 <script>
     export default {
+        props:['fb'],
         data () {
             return {
                 balance: 20

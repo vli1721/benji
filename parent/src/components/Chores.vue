@@ -68,7 +68,8 @@
                     }
 
                 }
-            }, function (errorObject) {
+            },
+            function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
             });
         },
@@ -111,11 +112,19 @@
                 //server
                 const vm = this;
 
+                console.log(snapshot.val())   ;
+
                 ref.on("value", function(snapshot) {
                     for(var x in snapshot.val()['chores']){
                         var obj = snapshot.val()['chores'][x];
-                        if(obj.id === id) {
-
+                        if(!vm.choresList.includes(obj)) {
+                            vm.choresList.push(
+                                {
+                                    description: obj.description,
+                                    reward: obj.reward,
+                                    id: obj.id
+                                }
+                            )
                         }
 
                     }
