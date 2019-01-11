@@ -3,7 +3,9 @@ import './MainPage.css';
 import { connect } from 'react-redux';
 
 import Balance from './Balance';
-import { startGetBalance, startGetPage } from '../actions/settings';
+import ChoreList from './/ChoreList';
+import { watchBalance } from '../actions/settings';
+import { startGetChores } from '../actions/chores';
 
 class MainPage extends Component {
 
@@ -12,28 +14,26 @@ class MainPage extends Component {
   }
 
   componentDidMount() {
-    this.props.getPage();
-    this.props.getBalance();
+    this.props.getChores();
   }
 
   render() {
     return (
       <div className="mainPage">
         <h1>Main page</h1>
-        <Balance />
-        <button></button>
+        <ChoreList />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  page: state.settings.page
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getPage: () => dispatch(startGetPage()),
-  getBalance: (page) => dispatch(startGetBalance())
+  watchBalance: (page) => dispatch(watchBalance(page)),
+  getChores: () => dispatch(startGetChores())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

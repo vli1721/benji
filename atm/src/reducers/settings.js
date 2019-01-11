@@ -1,5 +1,6 @@
 const settingsDefault = {
-    user: null
+    user: 'bobby',
+    balance: 0
 }
 
 const settingsReducer = (state = settingsDefault, action) => {
@@ -8,12 +9,6 @@ const settingsReducer = (state = settingsDefault, action) => {
             return {
                 ...state,
                 user: action.user
-            }
-        case 'GET_PAGE':
-        case 'CHANGE_PAGE':
-            return {
-                ...state,
-                page: action.page
             }
         case 'GET_BALANCE':
         case 'CHANGE_BALANCE':
