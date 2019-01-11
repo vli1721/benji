@@ -1,9 +1,31 @@
 .chore {
+    display: flex;
     width: 100%;
-    height: 15rem;
+    height: 7rem;
+    padding: 1rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
     background-color: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .chore:not(:first-child) {
     margin-top: 1rem;
+}
+
+.chore-description {
+    display: inline-block;
+    font-size: 2rem;
+    font-family: 'Montserrat';
+    margin: 0;
+}
+
+.chore-reward {
+    display: inline-block;
+    font-size: 3rem;
+    color: #ea5455;
+    margin: 0;
 }

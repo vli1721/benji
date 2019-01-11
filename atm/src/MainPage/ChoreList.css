@@ -1,8 +1,8 @@
 .chore-container {
     padding: 1rem;
     background-color: #ff9a00;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-radius: 20px;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .2);
 }
 
 .chore-title {
@@ -10,7 +10,7 @@
     text-align: center;
     font-size: 3rem;
     color: white;
-
+    font-family: 'Montserrat'
 }
 
 

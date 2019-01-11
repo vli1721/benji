@@ -41,6 +41,7 @@ export const startGetChores = () => {
     console.log('triggered')
     return (dispatch, getState) => {
         const user = getState().settings.user;
+        console.log(user)
 
         database.ref(`users/${user}/chores`).once('value').then((snapshot) => {
             const chores = []
@@ -51,6 +52,8 @@ export const startGetChores = () => {
                     ...childSnap.val()
                 })
             })
+
+            console.log(chores)
 
             dispatch(getChores(chores))
         })

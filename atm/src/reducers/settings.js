@@ -33,6 +33,11 @@ const settingsReducer = (state = settingsDefault, action) => {
                 ...state,
                 goal: action.goal
             }
+        case 'GET_GOAL_PRICE':
+            return {
+                ...state,
+                goalPrice: action.goalPrice
+            }
         default: 
             return state;
     }

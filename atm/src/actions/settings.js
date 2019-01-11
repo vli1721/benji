@@ -80,11 +80,28 @@ export const getGoal = (goal) => ({
 });
 
 // goal
-export const startGetGoal = (balance) => {
+export const startGetGoal = () => {
     return (dispatch, getState) => {
         const user = getState().settings.user;
         database.ref(`users/${user}/goal`).once('value', (snapshot) => {
-            dispatch(getBalance(snapshot.val()));
+            dispatch(getGoal(snapshot.val()));
         })
     }
 }
+
+export const getGoalPrice = (goalPrice) => ({
+    type: 'GET_GOAL_PRICE',
+    goalPrice
+});
+
+// goal
+export const startGetGoalPrice = () => {
+    return (dispatch, getState) => {
+        const user = getState().settings.user;
+        database.ref(`users/${user}/goal-price`).once('value', (snapshot) => {
+            dispatch(getGoalPrice(snapshot.val()));
+        })
+    }
+}
+
+

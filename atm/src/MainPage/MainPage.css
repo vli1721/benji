@@ -6,12 +6,14 @@
 }
 
 .left-container {
-    flex-grow: 1;
+    /*flex-grow: 1;*/
+    width: 50%;
 }
 
 .right-container {
-    flex-grow: 1;
-    margin-left: 10rem;
+    /*flex-grow: 1;*/
+    margin-left: 2rem;
+    width: 50%;
 }
 
 .main-container {

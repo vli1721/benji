@@ -5,9 +5,9 @@ import './Chore.css';
 
 const Chore = (props) => {
     return (
-        <div>
-            <span>{props.chore.description}</span>
-            <Button>Complete</Button>
+        <div className='chore'>
+            <p className='chore-description'>{props.chore.description}</p>
+            <p className='chore-reward'>${props.chore.reward}</p>
         </div>
     )
 }

@@ -1,11 +1,16 @@
 import React from 'react';
 
-import styles from './Coin.module.css';
+import './Coin.css';
 
-const Coin = () => {
+const Coin = (props) => {
     return (
-        <div className={styles['coin']}>
-
+        <div 
+            className='coin'
+            style={{
+                opacity: props.paid ? 1 : .5
+            }}
+        >
+            <p className='cent'>&#162;</p>
         </div>
     )
 }

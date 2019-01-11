@@ -5,8 +5,8 @@ import Grid from '@material-ui/core/Grid';
 
 import Balance from './Balance';
 import ChoreList from './ChoreList';
-import Goal from './Coin';
-import { watchBalance, startGetGoal } from '../actions/settings';
+import Goal from './Goal';
+import { watchBalance, startGetGoal, startGetGoalPrice } from '../actions/settings';
 import { startGetChores } from '../actions/chores';
 
 class MainPage extends Component {
@@ -20,14 +20,15 @@ class MainPage extends Component {
     this.props.getChores();
     // this.props.speak(`Welcome, ${this.props.user}.`)
     this.props.getGoal();
+    this.props.getPrice();
   }
 
   render() {
     return (
       <div className='mainPage'>
-        <Balance />
         <div className='main-container'>
           <div className='left-container'>
+            <Balance />
             <ChoreList />
           </div>
           <div className='right-container'>
@@ -47,7 +48,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   watchBalance: () => dispatch(watchBalance()),
   getChores: () => dispatch(startGetChores()),
-  getGoal: () => dispatch(startGetGoal())
+  getGoal: () => dispatch(startGetGoal()),
+  getPrice: () => dispatch(startGetGoalPrice())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
