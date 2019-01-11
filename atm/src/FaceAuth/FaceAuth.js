@@ -40,7 +40,7 @@ class FaceAuth extends Component {
   }
    
   componentWillReceiveProps = (nextProps) => {
-    if(this.props.user != nextProps.user) {
+    if(this.props.user != nextProps.user && nextProps.user !== null) {
       console.log('routed')
       history.push('/main')
     }
