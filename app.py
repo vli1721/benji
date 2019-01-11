@@ -21,9 +21,9 @@ config = {
 }
 
 
-session_client = dialogflow.SessionsClient()
-DIALOGFLOW_PROJECT_ID = "benji-42f8d"
-DIALOGFLOW_LANGUAGE_CODE = "en"
+# session_client = dialogflow.SessionsClient()
+# DIALOGFLOW_PROJECT_ID = "benji-42f8d"
+# DIALOGFLOW_LANGUAGE_CODE = "en"
 
 firebase = pyrebase.initialize_app(config)
 
@@ -64,7 +64,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
 	# Only take action if intent detection confidence is over 80% for deposits and withdrawals
 
-	if transaction_type == "Deposit" and detect_confidence > 0.8::
+	if transaction_type == "Deposit" and detect_confidence > 0.8:
 		curr_user = db.child("users").child(username).get()
 
 		# Update current balance
@@ -75,7 +75,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
 		return "Deposit completed"
 
-	elif transaction_type == "Withdraw" and detect_confidence > 0.8::
+	elif transaction_type == "Withdraw" and detect_confidence > 0.8:
 		curr_user = db.child("users").child(username).get()
 
 		# Update current balance
