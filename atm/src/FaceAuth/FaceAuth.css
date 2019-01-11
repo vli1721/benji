@@ -4,3 +4,39 @@
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
+
+.video-container {
+	width: 100%;
+	text-align: center;
+}
+
+.video-outer {
+    background-color: #2ecc71;
+    border-radius: 20px;
+    padding: 1rem;
+    box-sizing: border-box;
+    width: 400px;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .2);
+    text-align: center;
+    margin-left: auto;
+  margin-right: auto;
+}
+
+.video-inner {
+    background-color: white;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+.video-title {
+    font-family: "Montserrat";
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.face-auth {
+	text-align: center;
+}

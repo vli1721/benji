@@ -18,15 +18,6 @@ const ChoreList = (props) => {
         <div className='chore-container'>
             <h1 className='chore-title'>Chore List</h1>
             <div className='chore-list'>
-                <Chore
-                    key={'nah'}
-                    chore={
-                        {
-                            description: 'yes',
-                            reward: 2
-                        }
-                    }
-                />
                 {chores}
             </div>
         </div>

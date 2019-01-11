@@ -49,7 +49,7 @@ class AppRouter extends Component {
           </Toolbar>
         </AppBar>
         <div id="brand-container">
-          <h1 id="brand">{this.benjiEmoji()} Benji</h1>
+          <h1 id="brand">{this.benjiEmoji()} {this.props.user ? `Hi, ${this.props.user.replace(/^\w/, c => c.toUpperCase())}.` : "Benji"}</h1>
         </div>
         <MainPage visible={this.props.user != null} />
         <FaceAuth visible={this.props.user == null}/>

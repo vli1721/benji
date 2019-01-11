@@ -19,13 +19,27 @@ export const startCompleteChore = (chore) => {
     }
 }
 
-// event for when chore changes from the backend
-export const watchChores = (id) => {
+// // event for when chore changes from the backend
+// export const watchChores = (id) => {
+//     return (dispatch, getState) => {
+//         const user = getState().settings.user;
+
+//         database.ref(`users/${user}/chores/${id}`).on('value', (snapshot) => {
+
+//         })
+//     }
+// }
+
+export const watchChores = () => {
     return (dispatch, getState) => {
         const user = getState().settings.user;
 
-        database.ref(`users/${user}/chores/${id}`).on('value', (snapshot) => {
+        console.log(user)
 
+        database.ref(`users/${user}/chores`).on('value', (snapshot) => {
+
+            console.log(snapshot.val())
+            dispatch(getChores(Object.values(snapshot.val())));
         })
     }
 }
@@ -73,7 +87,7 @@ export const watchVerifyChore = () => {
         database.ref(`users/${user}/chores`).on('child_changed', (snapshot) => {
             const key = Object.keys(snapshot.val())[0];
             const chore = snapshot.val();
-            if(chore.verify) {
+            if(chore.completed) {
                 dispatch(verifyChore(key))
             }
         });

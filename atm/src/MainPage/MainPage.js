@@ -8,8 +8,7 @@ import Balance from './Balance';
 import ChoreList from './ChoreList';
 import Goal from './Goal';
 import { watchBalance, startGetGoal, startGetGoalPrice } from '../actions/settings';
-import { watchVerifyChore } from '../actions/chores';
-import { startGetChores } from '../actions/chores';
+import { watchVerifyChore, watchChores, startGetChores } from '../actions/chores';
 
 class MainPage extends Component {
 
@@ -37,20 +36,27 @@ class MainPage extends Component {
   componentDidUpdate = (prevProps, prevState, snapshot) => {
     if (prevProps.user != this.props.user && this.props.user != null) {
       this.props.watchBalance();
-      this.props.getChores();
+      // this.props.getChores();
       this.props.getGoal();
       this.props.getPrice();
-      this.props.watchVerifyChore();
-      this.speak('Welcome, ' + this.props.user)
+      this.props.watchChores();
+      this.speak('Welcome, ' + this.props.user, () => {
+        console.log("STARTING RECOG")
+        // this.recognition.start()
+      }
+        )
     }
   }
 
-  speak = (message) => {
+  speak = (message, end = () => {}) => {
       const msg = new SpeechSynthesisUtterance(message)
+
+      console.log('recognizing: ' + this.state.recognizing)
 
       msg.onend = (event) => {
         // this.setState({benjiSpeaking: false})
         console.log('done speaking')
+        end();
       }
 
       const voices = window.speechSynthesis.getVoices()
@@ -115,25 +121,28 @@ class MainPage extends Component {
         .done((res) => {
           // this.props.speak("Done")
           console.log(res)
+          this.speak(res.message, () => {
+            // this.recognition.start()
+          });
         })
-        .fail(() => {
-          // this.props.speak("Sorry I don't understand")
+        .fail((res) => {
+          // console.log(res)
+          this.speak("Sorry, I don't understand", () => {
+            // this.recognition.start()
+          })
         })
         .always((data) => {
-          console.log(data.responseText)
-          if (data.status == 200) {
-            this.speak(data.responseText);
-          }
-          
           this.setState({
             finalTranscript: "",
           })
+
           this.recognition.start()
+          
         });
       
-    
     }
     this.recognition.start()
+    
   }
 
   render() {
@@ -162,6 +171,7 @@ const mapDispatchToProps = (dispatch) => ({
   watchBalance: () => dispatch(watchBalance()),
   watchVerifyChore: () => dispatch(watchVerifyChore()),
   getChores: () => dispatch(startGetChores()),
+  watchChores: () => dispatch(watchChores()),
   getGoal: () => dispatch(startGetGoal()),
   getPrice: () => dispatch(startGetGoalPrice())
 });

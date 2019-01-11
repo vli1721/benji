@@ -168,9 +168,17 @@ class FaceAuth extends Component {
 
     return (
       <div className="face-auth" style={{visibility: this.props.visible == true ? 'visible' : 'hidden'}}>
-        <Paper id="brand-container" elevation={1}>
+      <div className='video-container'>
+        <div className='video-outer'>
+          <div className='video-inner'>
+              <h1 className="video-title">Video</h1>
+              <video id="inputVideo" ref="video" onPlay={this.onPlay} autoPlay={true} muted></video>
+          </div>
+        </div>
+      </div>
+{/*        <Paper id="brand-container" elevation={1}>
           <video id="inputVideo" ref="video" onPlay={this.onPlay} autoPlay={true} muted></video>
-        </Paper>
+        </Paper>*/}
         <Grid container spacing={24} className="grid">
           <Grid item xs={4}>
             <h2>
