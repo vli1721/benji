@@ -1,8 +1,11 @@
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
+from flask_cors import CORS
+
 
 # Configure application
 app = Flask(__name__)
+CORS(app) # enable cross-origin requests
 
 import pyrebase
 
