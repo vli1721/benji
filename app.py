@@ -80,8 +80,8 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 			else:
 				print("Error: not enough money in account")
 				return "Error: not enough money in account"
-		elif transaction_type == "Chore_Complete":
-			# TODO
+		# elif transaction_type == "Chore_Complete":
+		# 	# TODO
 
 		return "Balance updated"
 
