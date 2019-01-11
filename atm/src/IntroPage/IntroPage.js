@@ -31,6 +31,7 @@ class IntroPage extends Component {
       expression: null,
       threshold: 0.4,
       balance: 42.00,
+      benjiSpeaking: false,
     }
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -78,7 +79,9 @@ class IntroPage extends Component {
       /* handle the error */
       console.log(err);
     });
+    this.speak("Hi, my name's benji! How can I help?");
     this.onPlay();
+
   }
 
   speak = (message) => {
@@ -88,7 +91,7 @@ class IntroPage extends Component {
     window.speechSynthesis.speak(msg)
   }
 
-  expressionEmoji = () => {
+  benjiEmoji = () => {
     let emoji = '🥳';
     switch (this.state.expression) {
       case "neutral":
@@ -109,11 +112,11 @@ class IntroPage extends Component {
     return emoji;
   }
 
-  componentDidUpdate = (prevProps, prevState, snapshot) => {
-    if (prevState.numFaces == null && this.state.numFaces != null) {
-      this.speak('Welcome to Benji!');
-    }
-  }
+  // componentDidUpdate = (prevProps, prevState, snapshot) => {
+  //   if (prevState.numFaces == null && this.state.numFaces != null) {
+  //     this.speak("Hi, my name's benji! How can I help?");
+  //   }
+  // }
 
   bestExpression = (expressions) => {
     let maxProb = -1;
@@ -167,12 +170,12 @@ class IntroPage extends Component {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" color="inherit">
-              {this.expressionEmoji()} Benji
+              {this.benjiEmoji()} Benji
             </Typography>
           </Toolbar>
         </AppBar>
         <Paper id="brand-container" elevation={1}>
-            <h1 id="brand">{this.expressionEmoji()} Benji</h1>
+            <h1 id="brand">{this.benjiEmoji()} Benji</h1>
             <h1 id="balance">${this.state.balance.toFixed(2)}</h1>
             <h4>Your balance</h4>
             <video id="inputVideo" ref="video" autoPlay={true} muted></video>
