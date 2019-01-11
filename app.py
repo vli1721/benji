@@ -21,15 +21,15 @@ config = {
 }
 
 
-session_client = dialogflow.SessionsClient()
-DIALOGFLOW_PROJECT_ID = "benji-42f8d"
-DIALOGFLOW_LANGUAGE_CODE = "en"
+# session_client = dialogflow.SessionsClient()
+# DIALOGFLOW_PROJECT_ID = "benji-42f8d"
+# DIALOGFLOW_LANGUAGE_CODE = "en"
 
 firebase = pyrebase.initialize_app(config)
 
 db = firebase.database()
 users = db.child("users")
-print(users.child("bobby").get().val())
+
 chores = db.child("chores")
 
 # chore = "chore1"
@@ -60,7 +60,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
 	# print(response)
 
-	username = str(response.query_result.parameters["name"])
+	username = str(response.query_result.parameters["name"]).lower()  # Convert username to lowercase
 	transaction_amount = float(response.query_result.parameters["currency_amount"]["amount"])
 	transaction_type = str(response.query_result.intent.display_name)
 	print(response.query_result.fulfillment_text)
@@ -68,8 +68,10 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
 	# Only take action if inent detection confidence is over 80%
 	if detect_confidence > 0.8:
+		curr_user = users.child(username).get()
+
 		# Update current balance
-		current_balance = float(users.child(username).child("balance").get().val())
+		current_balance = float(curr_user.val()["balance"])
 		if transaction_type == "Deposit":
 			current_balance += transaction_amount
 			users.child(username).update({ "balance": current_balance })
