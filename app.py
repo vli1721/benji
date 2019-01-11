@@ -88,10 +88,11 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 		elif transaction_type == "Chore_Complete":
 
 			curr_chore = str(response.query_result.parameters["chore"])
-			chores_list = db.child("users").child(username).child("chores").get().val()
-			for key in chores_list:
-				print(key)
-				chore_desc = str(chores_list[key]["description"])
+			chores_list = db.child("users").child(username).child("chores").get()
+			for chore in chores_list.each():
+				print(chore.key())
+				print(chore.val())
+				chore_desc = str(chore.val()["description"])
 				print(chore_desc)
 				if curr_chore in chore_desc:
 					db.child("users").child(username).child(chore_desc).update({ "completed": True })
