@@ -14,7 +14,7 @@ const ChoreList = (props) => {
 
     return (
         <div className={styles['chore-container']}>
-            <h3>Chore List</h3>
+            <h1 classnName={styles['title']}>Chore List</h1>
             <div className={styles['chore']}>
                 {chores}
             </div>

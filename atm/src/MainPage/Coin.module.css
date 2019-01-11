@@ -3,6 +3,8 @@
     width: 10rem;
     height: 10rem;
     background-color: #FFD700;
+    border-radius: 50%;
+    box-shadow: 0 1.5rem 4rem rgba(black, .15);
 }
 
 .coin::after {
@@ -12,5 +14,5 @@
     top: 0;
     left: 0;
     background-color: #CCAC00;
-    transform: translateX(-2rem);
+    transform: scale(2);
 }
