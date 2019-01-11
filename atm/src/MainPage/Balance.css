@@ -1,0 +1,11 @@
+
+.balance {
+    display: block;
+	font-size: 10em;
+    margin: 10px;
+    color: #3ec1d3;
+}
+
+.container {
+    width: 100%;
+}

@@ -71,3 +71,20 @@ export const startChangeBalance = (balance) => {
         database.ref(`users/${user}/balance`).set(balance)
     }
 }
+
+
+/* GOAL */
+export const getGoal = (goal) => ({
+    type: 'GET_GOAL',
+    goal
+});
+
+// goal
+export const startGetGoal = (balance) => {
+    return (dispatch, getState) => {
+        const user = getState().settings.user;
+        database.ref(`users/${user}/goal`).once('value', (snapshot) => {
+            dispatch(getBalance(snapshot.val()));
+        })
+    }
+}

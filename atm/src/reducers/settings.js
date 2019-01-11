@@ -2,7 +2,8 @@ const settingsDefault = {
     user: undefined,
     balance: 0,
     expression: undefined,
-    num_faces: undefined
+    num_faces: undefined,
+    goal: undefined
 }
 
 const settingsReducer = (state = settingsDefault, action) => {
@@ -26,6 +27,11 @@ const settingsReducer = (state = settingsDefault, action) => {
             return {
                 ...state,
                 balance: action.balance 
+            }
+        case 'GET_GOAL':
+            return {
+                ...state,
+                goal: action.goal
             }
         default: 
             return state;

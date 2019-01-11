@@ -1,0 +1,9 @@
+.chore {
+    width: 100%;
+    height: 15rem;
+    background-color: white;
+}
+
+.chore:not(:first-child) {
+    margin-top: 1rem;
+}
