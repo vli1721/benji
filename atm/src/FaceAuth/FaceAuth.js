@@ -29,25 +29,28 @@ class FaceAuth extends Component {
       timeout: null,
 		}
 
-    this._isMounted = false;
+    // this._isMounted = false;
 
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.onPlay = this.onPlay.bind(this);
    }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    console.log('unmounting!!')
   }
    
   componentWillReceiveProps = (nextProps) => {
-    if(this.props.user) {
-      clearTimeout(this.state.timeout);
+    if(this.props.user != null) {
       console.log('routed')
       history.push('/main')
     }
+    if(this.props.user == null) {
+      console.log('routed')
+      history.push('/')
+    }
   }
 
-	 async loadModels () {
+	async loadModels () {
     await faceapi.loadFaceDetectionModel(MODEL_URL);
     await faceapi.loadTinyFaceDetectorModel(MODEL_URL)
     await faceapi.loadFaceRecognitionModel(MODEL_URL);
@@ -95,8 +98,9 @@ class FaceAuth extends Component {
       console.log(err);
     });
 
-    this._isMounted = true;
-    this._isMounted && this.onPlay();
+    // this._isMounted = true;
+    // this._isMounted && this.onPlay();
+    this.onPlay();
   }
 
   bestExpression = (expressions) => {
@@ -125,6 +129,9 @@ class FaceAuth extends Component {
       .withFaceDescriptors()
 
       if (detections.length < 1) {
+        this.props.changeUser(null)
+        this.props.changeNumFaces(0)
+        this.props.changeExpression('neutral')
         return setTimeout(() => this.onPlay())
       } 
 
@@ -138,14 +145,19 @@ class FaceAuth extends Component {
       this.props.changeUser(face)
       this.props.changeNumFaces(detections.length)
       this.props.changeExpression(this.bestExpression(detections[0].expressions))
-      const timeout = this._isMounted && setTimeout(() => this.onPlay())
-      this.setState({timeout: timeout})
+      // const timeout = this._isMounted && setTimeout(() => this.onPlay())
+      // this.setState({timeout: timeout})
+      setTimeout(() => this.onPlay());
   }
 
   render() {
 
+    if (!(this.props.visible || true)) {
+      return null;
+    }
+
     return (
-      <div className="face-auth">
+      <div className="face-auth" style={{visibility: this.props.visible == true ? 'visible' : 'hidden'}}>
         <Paper id="brand-container" elevation={1}>
           <video id="inputVideo" ref="video" onPlay={this.onPlay} autoPlay={true} muted></video>
         </Paper>
