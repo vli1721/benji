@@ -21,9 +21,9 @@ config = {
 }
 
 
-session_client = dialogflow.SessionsClient()
-DIALOGFLOW_PROJECT_ID = "benji-42f8d"
-DIALOGFLOW_LANGUAGE_CODE = "en"
+# session_client = dialogflow.SessionsClient()
+# DIALOGFLOW_PROJECT_ID = "benji-42f8d"
+# DIALOGFLOW_LANGUAGE_CODE = "en"
 
 firebase = pyrebase.initialize_app(config)
 
@@ -95,14 +95,9 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 				chore_desc = str(chore.val()["description"])
 				print(chore_desc)
 				if curr_chore in chore_desc:
-					db.child("users").child(username).child(chore_desc).update({ "completed": True })
+					db.child("users").child("brian").child("chores").child(chore.key()).update({ "completed": True })
 					print("completed " + chore_desc)
 					break
-
-			print("invalid chore")
-
-
-		# 	# TODO
 
 		return "Action completed"
 
