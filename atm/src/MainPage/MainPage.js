@@ -8,6 +8,7 @@ import Balance from './Balance';
 import ChoreList from './ChoreList';
 import Goal from './Goal';
 import { watchBalance, startGetGoal, startGetGoalPrice } from '../actions/settings';
+import { watchVerifyChore } from '../actions/chores';
 import { startGetChores } from '../actions/chores';
 
 class MainPage extends Component {
@@ -39,6 +40,7 @@ class MainPage extends Component {
       this.props.getChores();
       this.props.getGoal();
       this.props.getPrice();
+      this.props.watchVerifyChore();
       this.speak('Welcome, ' + this.props.user)
     }
   }
@@ -158,6 +160,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   watchBalance: () => dispatch(watchBalance()),
+  watchVerifyChore: () => dispatch(watchVerifyChore()),
   getChores: () => dispatch(startGetChores()),
   getGoal: () => dispatch(startGetGoal()),
   getPrice: () => dispatch(startGetGoalPrice())
