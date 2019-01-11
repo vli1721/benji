@@ -68,29 +68,24 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
     #     response.query_result.fulfillment_text))
 
 
-@app.route("/post_stt", methods=["POST"])
-def post_stt():
-	request_json = request.get_json()
-	# print(request_json)
-	texts = "My name is " + str(request_json["name"]) + ". " + str(request_json["query"])
-	detect_intent_texts(DIALOGFLOW_PROJECT_ID, 1, texts, DIALOGFLOW_LANGUAGE_CODE)
-	return "Request received post_stt"
-
-@app.route("/update_chore", methods=["POST"])
-def update_chore():
-	request_json = request.get_json()
-	print(request_json)
-	# if not request.args.get("username"):
-	# 	return "error"
-	# username = str(request.args.get("username"))
-
-	# if not request.args.get("chore"):
-	# 	return "error"
-	# chore = str(request.args.get("chore"))
+# @app.route("/post_stt", methods=["POST"])
+# def post_stt():
+# 	request_json = request.get_json()
+# 	# print(request_json)
+# 	texts = "My name is " + str(request_json["name"]) + ". " + str(request_json["query"])
+# 	detect_intent_texts(DIALOGFLOW_PROJECT_ID, 1, texts, DIALOGFLOW_LANGUAGE_CODE)
+# 	return "Request received post_stt"
 
 
-	# chores.child(chore).update({"completed": True})
-	return "Request received"
+# @app.route("/update_db", methods=["POST"])
+# def update_db():
+# 	request_json = request.get_json()
+# 	print(request_json)
+
+# 	# request_json["queryResult"]["parameters"]["unit-currency"]
+
+# 	# chores.child(chore).update({"completed": True})
+# 	return "Request received"
 
 
 if __name__ == "__main__":
