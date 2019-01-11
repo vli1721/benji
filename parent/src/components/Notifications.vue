@@ -73,9 +73,9 @@
                                 completed: true
                             };
                             
-                            console.log("hsdadai");
-                            // var newPostRef = postsRef.push();
-                            // newPostRef.set(choreObj);
+                //             console.log("hsdadai");
+                //             // var newPostRef = postsRef.push();
+                //             // newPostRef.set(choreObj);
                             
                         }
                     }

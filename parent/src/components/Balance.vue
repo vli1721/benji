@@ -7,7 +7,7 @@
 
     >
 
-        <p style="margin: 40px; font-size: 4vw; text-align: center; display: inline" class="the-font">Balance: {{'$'+animatedNumber}}</p>
+        <p style="margin: 40px; font-size: 3.5vw; text-align: center; display: inline" class="the-font">Balance: {{'$'+animatedNumber}}</p>
 
     </v-sheet>
 </template>
