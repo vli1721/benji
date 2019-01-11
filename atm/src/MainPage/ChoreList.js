@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Chore from './Chore';
+import styles from './ChoreList.module.css';
 
 const ChoreList = (props) => {
     const chores = props.chores.map((chore) => {
@@ -14,7 +15,7 @@ const ChoreList = (props) => {
     return (
         <div>
             <h3>Chore List</h3>
-            <div>
+            <div className={styles['chore']}>
                 {chores}
             </div>
         </div>

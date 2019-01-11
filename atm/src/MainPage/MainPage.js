@@ -14,6 +14,7 @@ class MainPage extends Component {
   }
 
   componentDidMount() {
+    this.props.watchBalance();
     this.props.getChores();
   }
 
@@ -21,6 +22,7 @@ class MainPage extends Component {
     return (
       <div className="mainPage">
         <h1>Main page</h1>
+        <Balance />
         <ChoreList />
       </div>
     );
@@ -32,7 +34,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  watchBalance: (page) => dispatch(watchBalance(page)),
+  watchBalance: () => dispatch(watchBalance()),
   getChores: () => dispatch(startGetChores())
 });
 
