@@ -13,12 +13,29 @@
 </template>
 
 <script>
+var config = {
+        apiKey: "AIzaSyDa8Xluwh_e0fp-vVjyoZxDqekd7IcAoCk",
+        authDomain: "benji-42f8d.firebaseapp.com",
+        databaseURL: "https://benji-42f8d.firebaseio.com",
+        projectId: "benji-42f8d",
+        storageBucket: "benji-42f8d.appspot.com",
+        messagingSenderId: "533301633340"
+      };
+      firebase.initializeApp(config);
+    var database = firebase.database();
+    var ref = firebase.database().ref('users/bobby/balance');
     export default {
-        props:['fb'],
         data () {
             return {
-                balance: 20
+                balance: 0
             }
+        },
+        mounted (){
+            console.log('hi')
+            ref.on("value", function(snapshot) {
+                console.log('');
+                // this.balance = snapshot.val()
+            });
         }
     }
 </script>

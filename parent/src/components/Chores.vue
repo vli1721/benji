@@ -98,7 +98,13 @@
                 }
                 //server
                 const vm = this;
+
                 console.log(snapshot.val())   ;
+
+
+                console.log(snapshot.val())   ;
+
+
                 ref.on("value", function(snapshot) {
                     for(var x in snapshot.val()['chores']){
                         var obj = snapshot.val()['chores'][x];
