@@ -10,6 +10,8 @@ import {brian_1, brian_2} from '../Descriptors/Brian.js';
 import {vincent_1, vincent_2} from '../Descriptors/Vincent.js';
 import * as faceapi from 'face-api.js';
 import '@tensorflow/tfjs';
+import { history } from '../index';
+
 const MODEL_URL = '/models'
 
 class FaceAuth extends Component {
@@ -30,10 +32,9 @@ class FaceAuth extends Component {
    }
    
    componentWillReceiveProps(nextProps) {
-     console.log('prop changed')
-     if(this.props.user !== nextProps.user) {
-       console.log('routed')
-      this.props.history.push('/main')
+     if(this.props.user) {
+        console.log('routed')
+        history.push('/main')
      }
    }
 

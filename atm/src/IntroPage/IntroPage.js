@@ -32,10 +32,6 @@ class IntroPage extends Component {
     this.speak("Hi, my name's benji! How can I help?");
   }
 
-  goToMain = () => {
-    this.props.history.push('/main');
-  }
-
   speak = (message) => {
     var msg = new SpeechSynthesisUtterance(message)
     var voices = window.speechSynthesis.getVoices()

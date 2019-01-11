@@ -2,18 +2,9 @@ import { database } from '../index';
 
 
 /* IMAGE STUFF */
-
-export const getNumFaces = () => ({
-    type: 'GET_NUM_FACES'
-});
-
 export const changeNumFaces = (num_faces) => ({
     type: 'CHANGE_NUM_FACES',
     num_faces
-});
-
-export const getExpression = () => ({
-    type: 'GET_EXPRESSION'
 });
 
 export const changeExpression = (expression) => ({
@@ -26,6 +17,7 @@ export const changeExpression = (expression) => ({
 
 export const changeUser = (user) => ({
     type: 'CHANGE_USER',
+    user
 });
 
 
