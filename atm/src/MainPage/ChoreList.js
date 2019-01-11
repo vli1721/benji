@@ -13,7 +13,7 @@ const ChoreList = (props) => {
     });
 
     return (
-        <div>
+        <div className={styles['chore-container']}>
             <h3>Chore List</h3>
             <div className={styles['chore']}>
                 {chores}

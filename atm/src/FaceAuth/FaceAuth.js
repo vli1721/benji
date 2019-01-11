@@ -115,7 +115,7 @@ class FaceAuth extends Component {
 
     const input = this.refs.video;
 
-    if(!input.currentTime || input.paused || input.ended || !this._isMounted)
+    if(!input.currentTime || input.paused || input.ended)
         return
 
     // if (this.state.expression == "happy") {
@@ -134,7 +134,7 @@ class FaceAuth extends Component {
 
       console.log(bestMatch.toString())
       const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? null : bestMatch.label
-
+      
       this.props.changeUser(face)
       this.props.changeNumFaces(detections.length)
       this.props.changeExpression(this.bestExpression(detections[0].expressions))

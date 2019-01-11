@@ -1,0 +1,16 @@
+.coin {
+    position: relative;
+    width: 10rem;
+    height: 10rem;
+    background-color: #FFD700;
+}
+
+.coin::after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #CCAC00;
+    transform: translateX(-2rem);
+}
