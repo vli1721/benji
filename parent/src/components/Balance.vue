@@ -1,14 +1,13 @@
 <template>
     <v-sheet
-            style="width: 40%; margin: 20px auto; min-height: 40%;"
+            style="width: 40%; "
             color="green lighten-3"
             elevation="3"
 
+
     >
 
-        <p style="margin: 20px; font-size: 4vw; text-align: center">Balance: {{'$'+animatedNumber}}</p>
-
-        <p style="margin: 20px; font-size: 4vw; text-align: center">Almost to goal of 40</p>
+        <p style="margin: 20px; font-size: 4vw; text-align: center; display: inline" class="the-font">Balance: {{'$'+animatedNumber}}</p>
 
     </v-sheet>
 </template>
@@ -25,7 +24,6 @@
         mounted() {
             var vm = this;
             this.ref.on("value", function (snapshot) {
-                // vm.number = snapshot.val()
                 TweenLite.to(vm.$data, 0.5, { balance: snapshot.val() });
             });
         },

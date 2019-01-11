@@ -1,29 +1,33 @@
 <template>
     <v-sheet
-            style="width: 40%; margin: 20px auto 20px 20px; min-height: 100%; "
+            style="width: 40%;  min-height: 100%; "
             color="yellow lighten-3"
             elevation="3"
     >
 
-        <div style="overflow: hidden; margin: 20px">
-            <p style="margin:0 20px; font-size: 4vw; text-align: center">Chores</p>
-
+        <div style="overflow: hidden; margin: 20px;">
+            <p style=" font-size: 4vw; margin: 0" class="the-font">Chores</p>
+            <v-sheet
+                    color="yellow lighten-4"
+                    style="padding: 10px;"
+            >
             <div class="addChore hoverable">
-                <v-form style="width: 100%">
-                    <v-text-field label="Chore" style="width: 80%" v-model="choreInput"></v-text-field>
+                <v-form style="width: 80%; display: flex; justify-content: space-between">
+                    <v-text-field label="Chore" style="width: 30%; margin: 0 5px;" v-model="choreInput"></v-text-field>
+                    <v-text-field label="Reward" style="width: 30%; margin: 0 5px;" v-model="rewardInput"></v-text-field>
                 </v-form>
-                <v-btn small round flat style="margin: auto 0 10px auto; width: 20px" class="text-capitalize"
+                <v-btn small round flat style="margin: auto 0 15px auto; width: 20px" class="text-capitalize add-btn"
                        @click="writeUserData"><i class="fas fa-plus"></i></v-btn>
-
-
             </div>
-            <ul style="margin:0; overflow-y: scroll; height: 100px; padding: 0px">
-                <li v-for="c in choresList" v-if="c.description !== 'default' " style="display:flex;" @Mouseover="displayButtons" class="hoverable">
-                    <p style="margin: 0; margin: auto 0" class="text-capitalize">{{c.description}}</p>
-                    <v-btn flat style="margin: 0 0 0 auto;" class="text-capitalize" @click="deleteChore(c.id)"><i
-                            class="fas fa-trash"></i></v-btn>
-                </li>
-            </ul>
+
+                <ul style="margin:0; overflow-y: scroll; height: 100px; padding: 0px;">
+                    <li v-for="c in choresList" v-if="c.description !== 'default' " style="display:flex;" @Mouseover="displayButtons" class="hoverable">
+                        <p style="margin: 0; margin: auto 0;" class="text-capitalize">{{c.description}}</p>
+                        <v-btn flat style="margin: 0 0 0 auto;" class="text-capitalize delete-btn" @click="deleteChore(c.id)"><i
+                                class="fas fa-trash "></i></v-btn>
+                    </li>
+                </ul>
+            </v-sheet>
         </div>
     </v-sheet>
 </template>
@@ -36,6 +40,7 @@
         data() {
             return {
                 choreInput: '',
+                rewardInput: '',
                 // pull from firebase to fill array
                 choresList: [],
                 ref: this.db.ref('users/bobby')
@@ -90,10 +95,6 @@
                 console.log(choreObj);
                 var newPostRef = postsRef.push();
                 newPostRef.set(choreObj);
-                //client
-                // this.choresList.push(
-                //     choreObj
-                // );
             },
             deleteChore(id) { //delete the chore you click on
                 //client
@@ -133,4 +134,14 @@
     .hoverable:hover {
         opacity: .8;
     }
+
+    .delete-btn:hover i{
+        color: red;
+    }
+
+    .add-btn:hover i{
+        color: lightgreen;
+    }
+
+
 </style>
