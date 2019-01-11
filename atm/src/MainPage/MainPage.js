@@ -15,6 +15,7 @@ class MainPage extends Component {
 
   componentDidMount() {
     this.props.getChores();
+    // this.props.speak(`Welcome, ${this.props.user}.`)
   }
 
   render() {
@@ -28,7 +29,7 @@ class MainPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-
+  user: state.settings.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({

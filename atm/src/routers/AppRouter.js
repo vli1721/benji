@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 import IntroPage from '../IntroPage/IntroPage';
 import MainPage from '../MainPage/MainPage';
+import FaceAuth from '../FaceAuth/FaceAuth.js'
 import { startGetPage, startGetBalance } from '../actions/settings';
 
 class AppRouter extends Component {
@@ -30,6 +31,7 @@ class AppRouter extends Component {
 
     msg.onend = (event) => {
       this.setState({benjiSpeaking: false})
+      console.log('done speaking')
     }
 
     const voices = window.speechSynthesis.getVoices()
@@ -76,12 +78,17 @@ class AppRouter extends Component {
         <Paper id="brand-container" elevation={1}>
           <h1 id="brand">{this.benjiEmoji()} Benji</h1>
         </Paper>
+        
         <Router history={this.props.history}>
           <div>
             <Route path="/" component={IntroPage} exact={true} />
-            <Route path="/main" component={MainPage} />
+            <Route
+              path='/main'
+              render={(props) => <MainPage {...props} speak={this.speak} />}
+            />
           </div>
         </Router>
+        <FaceAuth visible={this.props.user == null}/>
       </div>
     )
   }
