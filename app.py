@@ -21,16 +21,13 @@ config = {
 }
 
 
-# session_client = dialogflow.SessionsClient()
-# DIALOGFLOW_PROJECT_ID = "benji-42f8d"
-# DIALOGFLOW_LANGUAGE_CODE = "en"
+session_client = dialogflow.SessionsClient()
+DIALOGFLOW_PROJECT_ID = "benji-42f8d"
+DIALOGFLOW_LANGUAGE_CODE = "en"
 
 firebase = pyrebase.initialize_app(config)
 
 db = firebase.database()
-users = db.child("users")
-
-chores = db.child("chores")
 
 # chore = "chore1"
 # chores.child(chore).update({"completed": True})
@@ -68,17 +65,17 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
 	# Only take action if inent detection confidence is over 80%
 	if detect_confidence > 0.8:
-		curr_user = users.child(username).get()
+		curr_user = db.child("users").child(username).get()
 
 		# Update current balance
 		current_balance = float(curr_user.val()["balance"])
 		if transaction_type == "Deposit":
 			current_balance += transaction_amount
-			users.child(username).update({ "balance": current_balance })
+			db.child("users").child(username).update({ "balance": current_balance })
 		elif transaction_type == "Withdraw":
 			if current_balance >= transaction_amount:
 				current_balance -= transaction_amount
-				users.child(username).update({ "balance": current_balance })
+				db.child("users").child(username).update({ "balance": current_balance })
 			else:
 				print("Error: not enough money in account")
 				return "Error: not enough money in account"
