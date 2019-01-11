@@ -92,8 +92,8 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
 
 	elif transaction_type == "Chore_Complete" and detect_confidence > 0.4:
-		curr_chore = str(response.query_result.parameters["chore"][0])
-		curr_action = str(response.query_result.parameters["action"][0])
+		curr_chore = str(response.query_result.parameters["chore"][0]).lower()
+		curr_action = str(response.query_result.parameters["action"]).lower()
 		# print(curr_chore)
 		# print(curr_action)
 
