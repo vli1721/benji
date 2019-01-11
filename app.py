@@ -59,11 +59,12 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
         session=session, query_input=query_input)
 
     print('=' * 20)
-    print(response)
-    print(response.query_result.parameters)
+    # print(response)
+    print(response.query_result.parameters["name"])
+    print(response.query_result.parameters["currency_amount"]["amount"])
     print(response.query_result.fulfillment_text)
     print(response.query_result.intent.display_name)
-    print(response.query_result.intent.intent_detection_confidence)
+    print(response.query_result.intent_detection_confidence)
     # print('Query text: {}'.format(response.query_result.query_text))
     # print('Detected intent: {} (confidence: {})\n'.format(
     #     response.query_result.intent.display_name,
