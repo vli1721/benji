@@ -58,13 +58,37 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
     response = session_client.detect_intent(
         session=session, query_input=query_input)
 
-    print('=' * 20)
     # print(response)
-    print(response.query_result.parameters["name"])
-    print(response.query_result.parameters["currency_amount"]["amount"])
-    print(response.query_result.fulfillment_text)
-    print(response.query_result.intent.display_name)
-    print(response.query_result.intent_detection_confidence)
+
+    username = str(response.query_result.parameters["name"])
+    transaction_amount = float(response.query_result.parameters["currency_amount"]["amount"])
+    transaction_type = str(response.query_result.intent.display_name)
+	print(response.query_result.fulfillment_text)
+    detect_confidence = float(response.query_result.intent_detection_confidence)
+
+    # Only take action if inent detection confidence is over 80%
+    if detect_confidence > 0.8:
+	    # Update current balance
+	    current_balance = float(users.child(username).child("balance").get().val())
+	    if transaction_type == "Deposit":
+	    	current_balance += transaction_amount
+	    	users.child(username).update({ "balance": current_balance })
+	    elif transaction_type == "Withdraw":
+	    	if current_balance >= transaction_amount:
+	    		current_balance -= transaction_amount
+	    		users.child(username).update({ "balance": current_balance })
+			else:
+	    		print("Error: not enough money in account")
+	    		return "Error: not enough money in account"
+	    elif transaction_type == "Chore_Complete":
+	    	# TODO
+
+	    return "Balance updated"
+
+	else:
+		print("Intent detection confidence is too low (" + str(detect_confidence) + ")")
+		return "Error: intent detection confidence is too low"
+
     # print('Query text: {}'.format(response.query_result.query_text))
     # print('Detected intent: {} (confidence: {})\n'.format(
     #     response.query_result.intent.display_name,
