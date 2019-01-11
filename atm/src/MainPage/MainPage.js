@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './MainPage.css';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
+import jQuery from 'jquery';
 
 import Balance from './Balance';
 import ChoreList from './ChoreList';
@@ -13,14 +14,98 @@ class MainPage extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      finalTranscript: "",
+      recognizing: false,
+    }
+
+    this.confirmations = [
+      "OK!",
+      "Will do.",
+      "Alright.",
+    ]
+
+    this.congratulations = [
+      "Great!",
+      "Awesome!",
+      "Nice!",
+      "Good job",
+    ]
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.props.watchBalance();
     this.props.getChores();
-    // this.props.speak(`Welcome, ${this.props.user}.`)
     this.props.getGoal();
     this.props.getPrice();
+
+    window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+    this.recognition = new window.SpeechRecognition();
+    this.recognition.interimResults = true;
+    this.recognition.maxAlternatives = 10;
+    // recognition.continuous = true;
+    this.recognition.continuous = false;
+    this.recognition.onresult = (event) => {
+      this.setState({recognizing: true})
+      let interimTranscript = '';
+      for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
+        let transcript = event.results[i][0].transcript;
+        console.log(interimTranscript)
+        if (event.results[i].isFinal) {
+          this.setState({
+            finalTranscript: this.state.finalTranscript + transcript
+          });
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+
+    }
+
+    this.recognition.onend = (event) => {
+      // alert(finalTranscript);
+      console.log(this.state.finalTranscript)
+      this.setState({
+        recognizing: false,
+      })
+
+      // if (this.state.finalTranscript.split(" ")[0].toLowerCase() != "benji") {
+
+      //   this.setState({
+      //     finalTranscript: "",
+      //   })
+      //   this.recognition.start()
+
+      //   return;
+      // }
+
+
+      console.log("POSTING REQUEST")
+        jQuery.ajax({
+          type: "POST",
+          url: "http://ec2-3-85-164-61.compute-1.amazonaws.com/post_stt",
+          data: JSON.stringify({ name: this.props.user, query: this.state.finalTranscript }),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json"
+        })
+        .done(() => {
+          // this.props.speak("Done")
+        })
+        .fail(() => {
+          // this.props.speak("Sorry I don't understand")
+        })
+        .always(() => {
+          // alert( "posted to backend" );
+          console.log("PLEASE")
+          this.setState({
+            finalTranscript: "",
+          })
+          this.recognition.start()
+        });
+      
+    
+    }
+    this.recognition.start()
   }
 
   render() {

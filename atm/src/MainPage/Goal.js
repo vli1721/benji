@@ -6,17 +6,17 @@ import './Goal.css'
 
 const Goal = (props) => {
     const coins = []
-    for(let i = 0; i < Math.floor(props.goalPrice); i++) {
-        coins.push(<Coin paid={true}/>);
+    for(let i = 0; i < Math.floor(props.balance); i++) {
+        coins.push(<Coin key={i} paid={true}/>);
     }
-    for(let i = 0; i < Math.ceil(props.balance - props.goalPrice); i++) {
-        coins.push(<Coin paid={false}/>);
+    for(let i = 0; i < Math.ceil(props.goalPrice - props.balance); i++) {
+        coins.push(<Coin key={i} paid={false}/>);
     }
 
     return (
         <div className='goal-outer'>
             <div className='goal-inner'>
-                <h1 className="goal-title">{props.goal}</h1>
+                <h1 className="goal-title">{props.balance >= props.goal && '🎉'}{props.goal}{props.balance >= props.goal && '🎉'}</h1>
                 <div className="coin-container">
                     {coins}
                 </div>

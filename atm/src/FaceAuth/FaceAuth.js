@@ -44,10 +44,17 @@ class FaceAuth extends Component {
       console.log('routed')
       history.push('/main')
     }
-    // if(this.props.user == null || this.props.numFaces > 1) {
-    //   console.log('routed')
-    //   history.push('/')
-    // }
+    if(this.props.user == null || this.props.numFaces > 1) {
+      console.log('routed')
+      history.push('/')
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState, snapshot) => {
+    if (this.props.user != null && prevProps.user == null) {
+      console.log('routed');
+      history.push('/main');
+    }
   }
 
 	async loadModels () {
@@ -142,9 +149,7 @@ class FaceAuth extends Component {
       console.log(bestMatch.toString())
       const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? null : bestMatch.label
       
-      if(face) {
         this.props.changeUser(face);
-      }
       this.props.changeNumFaces(detections.length)
       this.props.changeExpression(this.bestExpression(detections[0].expressions))
       // const timeout = this._isMounted && setTimeout(() => this.onPlay())
