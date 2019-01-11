@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { changeUser, changeNumFaces, changeExpression } from '../actions/settings';
 import {brian_1, brian_2} from '../Descriptors/Brian.js';
 import {vincent_1, vincent_2} from '../Descriptors/Vincent.js';
+import {grant_1, grant_2} from '../Descriptors/Grant.js';
 import * as faceapi from 'face-api.js';
 import '@tensorflow/tfjs';
 const MODEL_URL = '/models'
@@ -52,6 +53,7 @@ class FaceAuth extends Component {
 
     const brianDescriptors = [brian_1, brian_2]
     const vincentDescriptors = [vincent_1, vincent_2]
+    const grantDescriptors = [grant_1, grant_2]
 
 
     const labeledDescriptors = [
@@ -62,6 +64,10 @@ class FaceAuth extends Component {
       new faceapi.LabeledFaceDescriptors(
         'vincent',
         vincentDescriptors.map(x => new Float32Array(Object.values(x)))
+      ),
+      new faceapi.LabeledFaceDescriptors(
+        'grant',
+        grantDescriptors.map(x => new Float32Array(Object.values(x)))
       ),
     ]
 
@@ -116,11 +122,9 @@ class FaceAuth extends Component {
       const bestMatch = this.faceMatcher.findBestMatch(detections[0].descriptor)
 
       console.log(bestMatch.toString())
-      const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? undefined : bestMatch.label
+      const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? null : bestMatch.label
 
-      if(face) {
-        this.props.changeUser(face)
-      }
+      this.props.changeUser(face)
       this.props.changeNumFaces(detections.length)
       this.props.changeExpression(this.bestExpression(detections[0].expressions))
       setTimeout(() => this.onPlay())
@@ -141,7 +145,7 @@ class FaceAuth extends Component {
           </Grid>
           <Grid item xs={4}>
             <h2>
-              { this.props.numFaces == null ? "Loading..." : `Indentified as: ${this.props.username == "null" ? "unknown" : this.state.username}` }
+              { this.props.numFaces == null ? "Loading..." : `Indentified as: ${this.props.username == null ? "unknown" : this.state.username}` }
             </h2>
           </Grid>
           <Grid item xs={4}>
