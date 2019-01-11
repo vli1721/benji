@@ -36,7 +36,7 @@
                 choreInput: '',
                 // pull from firebase to fill array
                 choresList: [],
-                ref: this.db.ref('users/bobby/chores')
+                ref: this.db.ref('users/bobby')
             }
         },
         mounted() {
@@ -45,7 +45,9 @@
             this.ref.on("value", function (snapshot) {
                     for (var x in snapshot.val()['chores']) {
                         var obj = snapshot.val()['chores'][x];
-                        if (!vm.choresList.includes(obj)) {
+
+                        if (!vm.choresList.includes(x)) {
+                            console.log('ERRROROORORR')
                             vm.choresList.push(
                                 {
                                     description: obj.description,
