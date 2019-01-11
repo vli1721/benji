@@ -3,6 +3,11 @@ import './IntroPage.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 import { startGetBalance } from '../actions/settings';
 
@@ -22,9 +27,10 @@ class IntroPage extends Component {
 
     this.state = {
       numFaces: null,
-      face: null,
+      username: null,
       expression: null,
       threshold: 0.4,
+      balance: 42.00,
     }
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -82,6 +88,27 @@ class IntroPage extends Component {
     window.speechSynthesis.speak(msg)
   }
 
+  expressionEmoji = () => {
+    let emoji = '🥳';
+    switch (this.state.expression) {
+      case "neutral":
+        emoji = '🥳';
+        break;
+      case "happy":
+        emoji = '😃';
+        break;
+      case "sad":
+        emoji = '😥';
+        break;
+      case "angry":
+        emoji = '😠';
+        break;
+      default:
+        emoji = '🥳';
+    }
+    return emoji;
+  }
+
   componentDidUpdate = (prevProps, prevState, snapshot) => {
     if (prevState.numFaces == null && this.state.numFaces != null) {
       this.speak('Welcome to Benji!');
@@ -122,65 +149,55 @@ class IntroPage extends Component {
       const bestMatch = this.faceMatcher.findBestMatch(detections[0].descriptor)
 
       console.log(bestMatch.toString())
-      const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? "unknown" : bestMatch.label
+      const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? null : bestMatch.label
 
 
       this.setState({
         numFaces: detections.length,
-        face: face,
+        username: face,
         expression: this.bestExpression(detections[0].expressions),
       })
-    // } else {
-    //   const detections = await faceapi.detectAllFaces(input)
-    //   .withFaceExpressions()
-
-    //   if (detections.length < 1) {
-    //     return setTimeout(() => this.onPlay())
-    //   }
-
-    //   console.log(detections)
-
-    //   this.setState({
-    //     numFaces: detections.length,
-    //     expression: this.bestExpression(detections[0].expressions),
-    //   })
-    // }
     setTimeout(() => this.onPlay())
   }
 
   render() {
 
-    let emoji = '🥳';
-    switch (this.state.expression) {
-      case "neutral":
-        emoji = '🥳';
-        break;
-      case "happy":
-        emoji = '😃';
-        break;
-      case "sad":
-        emoji = '😥';
-        break;
-      case "angry":
-        emoji = '😠';
-        break;
-      default:
-        emoji = '🥳';
-    }
-
     return (
       <div className="intro">
-        <h1 id="brand">{emoji} Benji</h1>
-          <video id="inputVideo" ref="video" autoPlay={true} muted></video>
-        <h2>
-          { this.state.numFaces == null ? "Setting up..." : `${this.state.numFaces} faces detected` }
-        </h2>
-        <h2>
-          { this.state.face != null && `Indentified as: ${this.state.face}` }
-        </h2>
-        <h2>
-          { this.state.expression != null && `Expression: ${this.state.expression}` }
-        </h2>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" color="inherit">
+              {this.expressionEmoji()} Benji
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Paper id="brand-container" elevation={1}>
+            <h1 id="brand">{this.expressionEmoji()} Benji</h1>
+            <h1 id="balance">${this.state.balance.toFixed(2)}</h1>
+            <h4>Your balance</h4>
+            <video id="inputVideo" ref="video" autoPlay={true} muted></video>
+          </Paper>
+        <Grid container spacing={24} className="grid">
+          <Grid item xs={4}>
+            <h2>
+              { this.state.numFaces != null && `${this.state.numFaces} faces detected` }
+            </h2>
+          </Grid>
+          <Grid item xs={4}>
+            <h2>
+              { this.state.numFaces == null ? "Loading..." : `Indentified as: ${this.state.username == "null" ? "unknown" : this.state.username}` }
+            </h2>
+          </Grid>
+          <Grid item xs={4}>
+            <h2>
+              { this.state.expression != null && `Expression: ${this.state.expression}` }
+            </h2>
+          </Grid>
+        </Grid>
+        
+        
+        
+        
       </div>
     );
   }
