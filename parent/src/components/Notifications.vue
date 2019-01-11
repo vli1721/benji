@@ -23,46 +23,15 @@
     import NI from './NotificationItem'
 
     export default {
+        props: ['db'],
         components: {
             NI
         },
         data () {
             return {
                 // someway push notif objects into this list
-                notificationsList: [
-                    {
-                        id: 1,
-                        body: 'Your child successfully washed the dishes'
-                    },
-                    {
-                        id: 2,
-                        body: 'Your child successfully threw out the trash'
-                    },
-                    {
-                        id: 3,
-                        body: 'Your child successfully won a hackathon'
-                    },
-                    {
-                        id: 4,
-                        body: 'Your child successfully walked the dogs'
-                    },
-                    {
-                        id: 5,
-                        body: 'Your child successfully fed the dogs'
-                    },
-                    {
-                        id: 5,
-                        body: 'Your child successfully fed the dogs'
-                    },
-                    {
-                        id: 5,
-                        body: 'Your child successfully fed the dogs'
-                    },
-                    {
-                        id: 5,
-                        body: 'Your child successfully fed the dogs'
-                    }
-                ]
+                notificationsList: [], 
+                ref: this.db.ref('users/bobby')
             }
         },
         methods: {
@@ -74,9 +43,38 @@
                     }
                 }
                 console.log(this.notificationsList)
-            }
+            },
 
-        }
+
+        },
+        mounted() {
+            //retrieve just added node
+            
+            const vm = this;
+            this.ref.on("value", function (snapshot) {
+                console.log('hi')
+                vm.notificationsList = []
+                    for (var x in snapshot.val()['chores']) {
+                        var obj = snapshot.val()['chores'][x];
+                        if (!obj.completed) {
+                            vm.notificationsList.push(
+                                {
+                                    description: obj.description,
+                                    reward: obj.reward,
+                                    id: obj.id,
+                                    verify: obj.false,
+                                    completed: obj.false
+                                }
+                            )
+                        
+                    }
+                    }
+                    console.log(this.notificationsList)
+                },
+                function (errorObject) {
+                    console.log("The read failed: " + errorObject.code);
+                });
+        },
 
 
     }

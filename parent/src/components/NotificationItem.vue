@@ -1,7 +1,7 @@
 <template>
     <div  class="notification-container">
         <div class="text-body">
-            <p style="margin: 0">{{this.notif.body}}</p>
+            <p style="margin: 0">{{this.notif.description}}</p>
         </div>
         <div class="b-group">
             <button class="confirm"><i class="fas fa-check"></i></button>

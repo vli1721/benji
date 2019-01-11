@@ -7,7 +7,7 @@
     <Balance :db="database" class="mycard"></Balance>
     <div style="display: flex">
       <Chores :db="database" class ="mycard"></Chores>
-      <Notifications class="mycard"></Notifications>
+      <Notifications :db="database" class="mycard"></Notifications>
     </div>
   </v-app>
 </template>
