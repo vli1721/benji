@@ -17,9 +17,7 @@
   import Notifications from './components/Notifications'
   import Chores from './components/Chores'
   import Firebase from 'firebase'
-
   
-
   // Initialize Firebase
   let config = {
     apiKey: "AIzaSyDa8Xluwh_e0fp-vVjyoZxDqekd7IcAoCk",
@@ -33,7 +31,6 @@
   let app = Firebase.initializeApp(config)
   let db = app.database()
   let choresRef = db.ref('users/bobby/chores')
-
   export default{
       firebase: {
         chore: choresRef
@@ -44,7 +41,6 @@
           Chores
       },
       methods: {
-
       }
   }
 </script>
@@ -53,9 +49,7 @@
   /**{*/
     /*border: 1px solid red;*/
   /*}*/
-
   .mycard{
     border-radius: 20px;
   }
-
 </style>

@@ -37,9 +37,7 @@
         messagingSenderId: "533301633340"
       };
       firebase.initializeApp(config);
-
     var database = firebase.database();
-
     var ref = firebase.database().ref('users/bobby');
     export default {
         data() {
@@ -53,7 +51,6 @@
             //retrieve just added node
             console.log(this.choresList);
             const vm = this;
-
             ref.on("value", function(snapshot) {
                 for(var x in snapshot.val()['chores']){
                     var obj = snapshot.val()['chores'][x];
@@ -66,39 +63,31 @@
                             }
                         )
                     }
-
                 }
-            }, function (errorObject) {
+            },
+            function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
             });
         },
         methods: {
             displayButtons(){
-
             },
             writeUserData() {
-
                 var choreObj = {
                     description: this.choreInput,
                     reward: "10",
                     id: this.choresList.length
                 };
-
                 //server
                 var postsRef = ref.child("chores");
                 var newPostRef = postsRef.push();
                 console.log(newPostRef);
                 newPostRef.set(choreObj);
-
-
-
                 //client
                 this.choresList.push(
                     choreObj
                 );
-
             },
-
             deleteChore(id){ //delete the chore you click on
                 //client
                 for(var i = 0; i < this.choresList.length; ++i){
@@ -107,36 +96,35 @@
                         break
                     }
                 }
-
                 //server
                 const vm = this;
-
+                console.log(snapshot.val())   ;
                 ref.on("value", function(snapshot) {
                     for(var x in snapshot.val()['chores']){
                         var obj = snapshot.val()['chores'][x];
-                        if(obj.id === id) {
-
+                        if(!vm.choresList.includes(obj)) {
+                            vm.choresList.push(
+                                {
+                                    description: obj.description,
+                                    reward: obj.reward,
+                                    id: obj.id
+                                }
+                            )
                         }
-
                     }
                 }, function (errorObject) {
                     console.log("The read failed: " + errorObject.code);
                 });
             }
         },
-
     }
 </script>
 
 <style>
     .addChore{
         display: flex;
-
     }
-
     .hoverable:hover{
         opacity: .8;
     }
-
-
 </style>
