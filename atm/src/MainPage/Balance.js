@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 import styles from './Balance.module.css';
 
-const Balance = () => {
+const Balance = (props) => {
     return (
         <div className={styles['balance']}>
-            <span>{this.props.balance}</span>
+            <span>{props.balance}</span>
         </div>
     )
 }

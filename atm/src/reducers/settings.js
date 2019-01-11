@@ -23,7 +23,6 @@ const settingsReducer = (state = settingsDefault, action) => {
                 user: action.user
             }
         case 'GET_BALANCE':
-        case 'CHANGE_BALANCE':
             return {
                 ...state,
                 balance: action.balance 

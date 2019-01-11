@@ -34,6 +34,8 @@ export const startGetBalance = () => {
     return (dispatch, getState) => {
         const user = getState().settings.user;
 
+        console.log(user)
+
         database.ref(`users/${user}/balance`).once('value', (snapshot) => {
 
             dispatch(getBalance(snapshot.val()));
@@ -45,8 +47,12 @@ export const watchBalance = () => {
     return (dispatch, getState) => {
         const user = getState().settings.user;
 
-        database.ref(`users/${user}/balance`).on('value', (snap) => {
-            dispatch(getBalance(snap.val()));
+        console.log(user)
+
+        database.ref(`users/${user}/balance`).on('value', (snapshot) => {
+
+            console.log(snapshot)
+            dispatch(getBalance(snapshot.val()));
         })
     }
 }
