@@ -59,3 +59,23 @@ export const startGetChores = () => {
         })
     }
 }
+
+export const verifyChore = (id) => ({
+    type: "VERIFY_CHORE",
+    id
+});
+
+// event for when chore is changed
+export const watchVerifyChore = () => {
+    return (dispatch, getState) => {
+        const user = getState().settings.user;
+
+        database.ref(`users/${user}/chores`).on('child_changed', (snapshot) => {
+            const key = Object.keys(snapshot.val())[0];
+            const chore = snapshot.val();
+            if(chore.verify) {
+                dispatch(verifyChore(key))
+            }
+        });
+    }
+}
