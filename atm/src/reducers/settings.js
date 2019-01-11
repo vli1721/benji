@@ -1,14 +1,16 @@
 const settingsDefault = {
-    user: 'bobby',
-    balance: 0
+    user: undefined,
+    balance: 0,
+    expression: undefined,
+    num_faces: undefined
 }
 
 const settingsReducer = (state = settingsDefault, action) => {
     switch(action.type) {
-        case 'CHANGE_FACES':
+        case 'CHANGE_NUM_FACES':
             return {
                 ...state,
-                num_faces: action.num
+                num_faces: action.num_faces
             }
         case 'CHANGE_EXPRESSION':
             return {

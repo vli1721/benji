@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
+import { changeUser, changeNumFaces, changeExpression } from '../actions/settings';
 import {brian_1, brian_2} from '../Descriptors/Brian.js';
 import {vincent_1, vincent_2} from '../Descriptors/Vincent.js';
 import * as faceapi from 'face-api.js';
@@ -26,7 +27,15 @@ class FaceAuth extends Component {
 
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.onPlay = this.onPlay.bind(this);
-	 }
+   }
+   
+   componentWillReceiveProps(nextProps) {
+     console.log('prop changed')
+     if(this.props.user !== nextProps.user) {
+       console.log('routed')
+      this.props.history.push('/main')
+     }
+   }
 
 	 async loadModels () {
     await faceapi.loadFaceDetectionModel(MODEL_URL);
@@ -107,15 +116,14 @@ class FaceAuth extends Component {
       const bestMatch = this.faceMatcher.findBestMatch(detections[0].descriptor)
 
       console.log(bestMatch.toString())
-      const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? null : bestMatch.label
+      const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? undefined : bestMatch.label
 
-
-      this.setState({
-        numFaces: detections.length,
-        username: face,
-        expression: this.bestExpression(detections[0].expressions),
-      })
-    setTimeout(() => this.onPlay())
+      if(face) {
+        this.props.changeUser(face)
+      }
+      this.props.changeNumFaces(detections.length)
+      this.props.changeExpression(this.bestExpression(detections[0].expressions))
+      setTimeout(() => this.onPlay())
   }
 
   render() {
@@ -128,17 +136,17 @@ class FaceAuth extends Component {
         <Grid container spacing={24} className="grid">
           <Grid item xs={4}>
             <h2>
-              { this.state.numFaces != null && `${this.state.numFaces} faces detected` }
+              { this.props.numFaces != null && `${this.props.numFaces} faces detected` }
             </h2>
           </Grid>
           <Grid item xs={4}>
             <h2>
-              { this.state.numFaces == null ? "Loading..." : `Indentified as: ${this.state.username == "null" ? "unknown" : this.state.username}` }
+              { this.props.numFaces == null ? "Loading..." : `Indentified as: ${this.props.username == "null" ? "unknown" : this.state.username}` }
             </h2>
           </Grid>
           <Grid item xs={4}>
             <h2>
-              { this.state.expression != null && `Expression: ${this.state.expression}` }
+              { this.props.expression != null && `Expression: ${this.props.expression}` }
             </h2>
           </Grid>
         </Grid> 
@@ -149,9 +157,15 @@ class FaceAuth extends Component {
 
 
 const mapStateToProps = (state) => ({
+  user: state.settings.user,
+  expression: state.settings.expression,
+  numFaces: state.settings.num_faces
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  changeUser: (user) => dispatch(changeUser(user)),
+  changeNumFaces: (num_faces) => dispatch(changeNumFaces(num_faces)),
+  changeExpression: (expression) => dispatch(changeExpression(expression))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FaceAuth);

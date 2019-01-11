@@ -3,13 +3,13 @@ import { database } from '../index';
 
 /* IMAGE STUFF */
 
-export const getFaces = () => ({
-    type: 'GET_FACES'
+export const getNumFaces = () => ({
+    type: 'GET_NUM_FACES'
 });
 
-export const changeFaces = (num) => ({
-    type: 'CHANGE_FACES',
-    num
+export const changeNumFaces = (num_faces) => ({
+    type: 'CHANGE_NUM_FACES',
+    num_faces
 });
 
 export const getExpression = () => ({
