@@ -29,6 +29,28 @@
 </template>
 
 <script>
+<<<<<<< Updated upstream
+=======
+import Firebase from 'firebase'
+    // Initialize Firebase
+    // var config = {
+    //     apiKey: "AIzaSyDa8Xluwh_e0fp-vVjyoZxDqekd7IcAoCk",
+    //     authDomain: "benji-42f8d.firebaseapp.com",
+    //     databaseURL: "https://benji-42f8d.firebaseio.com",
+    //     projectId: "benji-42f8d",
+    //     storageBucket: "benji-42f8d.appspot.com",
+    //     messagingSenderId: "533301633340"
+    // };
+    // let app = Firebase.initializeApp(config)
+    // let db = app.database()
+    // let ref = db.ref('users')
+    // if (!firebase.apps.length) {
+    //     var database = firebase.database();
+    //     var ref = firebase.database().ref('users/bobby');
+    // }
+
+
+>>>>>>> Stashed changes
     export default {
         props: ['db'],
         data() {
@@ -93,7 +115,10 @@
                 console.log(choreObj);
 
                 var newPostRef = postsRef.push();
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
                 newPostRef.set(choreObj);
 
                 //client
@@ -112,18 +137,25 @@
                 //server
                 const vm = this;
 
+<<<<<<< Updated upstream
                 this.ref.on("value", function (snapshot) {
                     console.log('HEREEEE')
+=======
+                ref.on("value", function (snapshot) {
+>>>>>>> Stashed changes
                     // console.log(snapshot.val());
 
                     for (var x in snapshot.val()['chores']) {
                         var obj = snapshot.val()['chores'][x];
                         if (obj.id === id) {
+<<<<<<< Updated upstream
                             var deleteRef = vm.db.ref('users/bobby/chores/' + x);
                             console.log('in here')
                             console.log(deleteRef)
+=======
+                            var deleteRef = Firebase.database().ref('users/bobby/chores/' + x);
+>>>>>>> Stashed changes
                             deleteRef.remove().then(function () {
-                                console.log('OK, gone');
                             }).catch(function (e) {
                                 console.log('OOPS, problem: ' + e.message);
                             });

@@ -27,7 +27,6 @@
             this.ref.on("value", function (snapshot) {
                 // vm.number = snapshot.val()
                 TweenLite.to(vm.$data, 0.5, { balance: snapshot.val() });
-
             });
         },
         computed: {
