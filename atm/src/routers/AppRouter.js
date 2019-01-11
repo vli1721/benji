@@ -41,9 +41,9 @@ class AppRouter extends Component {
   }
 
   benjiEmoji = () => {
-    if (this.state.benjiSpeaking) {
-      return '😄';
-    }
+    // if (this.state.benjiSpeaking) {
+    //   return '😄';
+    // }
 
     let emoji = '🥳';
     switch (this.props.expression) {
@@ -78,7 +78,6 @@ class AppRouter extends Component {
         <Paper id="brand-container" elevation={1}>
           <h1 id="brand">{this.benjiEmoji()} Benji</h1>
         </Paper>
-        
         <Router history={this.props.history}>
           <div>
             <Route path="/" component={IntroPage} exact={true} />

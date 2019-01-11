@@ -44,10 +44,10 @@ class FaceAuth extends Component {
       console.log('routed')
       history.push('/main')
     }
-    if(this.props.user == null) {
-      console.log('routed')
-      history.push('/')
-    }
+    // if(this.props.user == null || this.props.numFaces > 1) {
+    //   console.log('routed')
+    //   history.push('/')
+    // }
   }
 
 	async loadModels () {
