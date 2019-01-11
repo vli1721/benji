@@ -146,7 +146,7 @@ class FaceAuth extends Component {
           </Grid>
           <Grid item xs={4}>
             <h2>
-              { this.props.numFaces == null ? "Loading..." : `Indentified as: ${this.props.username == null ? "unknown" : this.state.username}` }
+              { this.props.numFaces == null ? "Loading..." : `Indentified as: ${this.props.user == null ? "unknown" : this.props.user}` }
             </h2>
           </Grid>
           <Grid item xs={4}>
