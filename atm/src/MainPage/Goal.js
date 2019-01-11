@@ -5,11 +5,15 @@ import Coin from './Coin';
 import './Goal.css'
 
 const Goal = (props) => {
+    let ratio = Math.round((props.balance / props.goalPrice) * 10);
+    if(ratio > 10) {
+        ratio = 10;
+    }
     const coins = []
-    for(let i = 0; i < Math.floor(props.goalPrice); i++) {
+    for(let i = 0; i < ratio; i++) {
         coins.push(<Coin paid={true}/>);
     }
-    for(let i = 0; i < Math.ceil(props.balance - props.goalPrice); i++) {
+    for(let i = 0; i < 10 - ratio; i++) {
         coins.push(<Coin paid={false}/>);
     }
 
