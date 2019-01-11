@@ -1,6 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from flask_cors import CORS
+import os
 
 import pyrebase  # Python firebase API
 
@@ -10,6 +11,7 @@ import dialogflow_v2 as dialogflow  # Dialogflow Python SDK
 app = Flask(__name__)
 CORS(app) # enable cross-origin requests
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "benji-079497d6e906.json"
 
 config = {
   "apiKey": "AIzaSyDa8Xluwh_e0fp-vVjyoZxDqekd7IcAoCk",
