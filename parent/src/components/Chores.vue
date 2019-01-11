@@ -18,7 +18,7 @@
 
             </div>
             <ul style="margin:0; overflow-y: scroll; height: 100px; padding: 0px">
-                <li v-for="c in choresList" style="display:flex;" @Mouseover="displayButtons" class="hoverable">
+                <li v-for="c in choresList" v-if="c.description !== 'default' " style="display:flex;" @Mouseover="displayButtons" class="hoverable">
                     <p style="margin: 0; margin: auto 0" class="text-capitalize">{{c.description}}</p>
                     <v-btn flat style="margin: 0 0 0 auto;" class="text-capitalize" @click="deleteChore(c.id)"><i
                             class="fas fa-trash"></i></v-btn>
@@ -43,20 +43,26 @@
             //retrieve just added node
             const vm = this;
             this.ref.on("value", function (snapshot) {
+                vm.choresList = []
                     for (var x in snapshot.val()['chores']) {
                         var obj = snapshot.val()['chores'][x];
 
                         if (!vm.choresList.includes(x)) {
-                            console.log('ERRROROORORR')
                             vm.choresList.push(
                                 {
                                     description: obj.description,
                                     reward: obj.reward,
-                                    id: obj.id
+                                    id: obj.id,
+                                    verify: obj.false,
+                                    completed: obj.false
                                 }
+
                             )
-                        }
+                        
                     }
+
+                    }
+
                 },
                 function (errorObject) {
                     console.log("The read failed: " + errorObject.code);
@@ -69,18 +75,20 @@
                 var choreObj = {
                     description: this.choreInput,
                     reward: "10",
-                    id: this.choresList.length
+                    id: this.choresList.length,
+                    verify: false,
+                    completed: false
+
                 };
-                //server
                 var postsRef = this.ref.child("chores");
                 var newPostRef = postsRef.push();
                 console.log(newPostRef);
                 newPostRef.set(choreObj);
 
                 //client
-                this.choresList.push(
-                    choreObj
-                );
+                // this.choresList.push(
+                //     choreObj
+                // );
             },
             deleteChore(id) { //delete the chore you click on
                 //client
