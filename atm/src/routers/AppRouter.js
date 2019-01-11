@@ -13,7 +13,36 @@ import { startGetPage, startGetBalance } from '../actions/settings';
 
 class AppRouter extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      benjiSpeaking: false,
+    }
+  }
+
+  componentDidMount = () => {
+    this.speak("Hi, my name's Benji!");
+  }
+
+  speak = (message) => {
+    const msg = new SpeechSynthesisUtterance(message)
+
+    msg.onend = (event) => {
+      this.setState({benjiSpeaking: false})
+    }
+
+    const voices = window.speechSynthesis.getVoices()
+    msg.voice = voices[50]
+    this.setState({benjiSpeaking: true})
+    window.speechSynthesis.speak(msg)
+  }
+
   benjiEmoji = () => {
+    if (this.state.benjiSpeaking) {
+      return '😄';
+    }
+
     let emoji = '🥳';
     switch (this.props.expression) {
       case "neutral":

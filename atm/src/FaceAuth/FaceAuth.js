@@ -115,7 +115,7 @@ class FaceAuth extends Component {
 
     const input = this.refs.video;
 
-    if(!input.currentTime || input.paused || input.ended)
+    if(!input.currentTime || input.paused || input.ended || !this._isMounted)
         return
 
     // if (this.state.expression == "happy") {
