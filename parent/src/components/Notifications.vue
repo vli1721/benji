@@ -5,10 +5,10 @@
                 elevation="3"
         >
 
-            <div style="overflow: hidden; margin: 20px">
+            <div style="overflow: hidden; margin: 20px; ">
                 <p style="margin: 0 20px; font-size: 4vw; text-align: center; overflow-wrap: normal;">Notifications</p>
 
-                <div style="overflow-y: scroll; height: 100px; padding: 10px">
+                <div style="overflow-y: scroll; height: 150px; padding: 10px">
                     <NI v-for="notif in notificationsList" :notif="notif" @remove="removeItem"></NI>
                 </div>
             </div>
@@ -41,6 +41,26 @@
                     {
                         id: 3,
                         body: 'Your child successfully won a hackathon'
+                    },
+                    {
+                        id: 4,
+                        body: 'Your child successfully walked the dogs'
+                    },
+                    {
+                        id: 5,
+                        body: 'Your child successfully fed the dogs'
+                    },
+                    {
+                        id: 5,
+                        body: 'Your child successfully fed the dogs'
+                    },
+                    {
+                        id: 5,
+                        body: 'Your child successfully fed the dogs'
+                    },
+                    {
+                        id: 5,
+                        body: 'Your child successfully fed the dogs'
                     }
                 ]
             }

@@ -1,8 +1,13 @@
 <template>
     <div  class="notification-container">
-        <p class="text-body">{{this.notif.body}}</p>
-        <v-btn flat class="confirm"><i class="fas fa-check"></i></v-btn>
-        <v-btn flat class="deny" @click="handleClick"><i class="fas fa-ban"></i></v-btn>
+        <div class="text-body">
+            <p style="margin: 0">{{this.notif.body}}</p>
+        </div>
+        <div class="b-group">
+            <button class="confirm"><i class="fas fa-check"></i></button>
+            <button class="deny" @click="handleClick"><i class="fas fa-ban"></i></button>
+        </div>
+
     </div>
 </template>
 
@@ -24,20 +29,28 @@
 </script>
 
 <style scoped>
-    .notification_container{
+    .notification-container{
         display: flex;
+        /*justify-content: space-between;*/
+    }
+
+    .text-body:hover{
+        opacity: .8;
     }
 
     .text-body{
-
+        width: 80%;
+        margin: 0;
     }
 
-    .confirm{
-
+    .b-group{
+        display: flex;
+        width: 10%;
     }
 
-    .deny{
-
+    .b-group button{
+        margin: 0 5px;
+        width: 40%;
     }
 </style>
 
