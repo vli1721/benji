@@ -1,5 +1,29 @@
 import { database } from '../index';
 
+
+/* IMAGE STUFF */
+
+export const getFaces = () => ({
+    type: 'GET_FACES'
+});
+
+export const changeFaces = (num) => ({
+    type: 'CHANGE_FACES',
+    num
+});
+
+export const getExpression = () => ({
+    type: 'GET_EXPRESSION'
+});
+
+export const changeExpression = (expression) => ({
+    type: 'CHANGE_EXPRESSION',
+    expression
+});
+
+
+/* USER */
+
 export const changeUser = (user) => ({
     type: 'CHANGE_USER',
 });

@@ -5,6 +5,16 @@ const settingsDefault = {
 
 const settingsReducer = (state = settingsDefault, action) => {
     switch(action.type) {
+        case 'CHANGE_FACES':
+            return {
+                ...state,
+                num_faces: action.num
+            }
+        case 'CHANGE_EXPRESSION':
+            return {
+                ...state,
+                expression: action.expression
+            }
         case 'CHANGE_USER':
             return {
                 ...state,
