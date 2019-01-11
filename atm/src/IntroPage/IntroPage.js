@@ -28,19 +28,6 @@ class IntroPage extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  updateExpression = (expr) => {
-    this.setState({expression: expr})
-  }
-
-  updateUsername = (user) => {
-    this.setState({username: user})
-  }
-
-  updateNumFaces = (num) => {
-    this.setState({numFaces: num})
-  }
-
-
   async componentDidMount() {
     this.speak("Hi, my name's benji! How can I help?");
   }
@@ -93,15 +80,17 @@ class IntroPage extends Component {
           <h1 id="balance">${this.state.balance.toFixed(2)}</h1>
           <h4>Your balance</h4>
         </Paper>
-        <FaceAuth
-          updateExpression={this.updateExpression}
-          updateUsername={this.updateUsername}
-          updateNumFaces={this.updateNumFaces}
-        />
+        <FaceAuth />
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
 
-export default IntroPage;
+});
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(IntroPage);

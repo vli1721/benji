@@ -147,4 +147,11 @@ class FaceAuth extends Component {
   }
 }
 
-export default FaceAuth;
+
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FaceAuth);
