@@ -71,18 +71,29 @@
         methods: {
             displayButtons() {
             },
+            hashCode(s) {
+              var h = 0, l = s.length, i = 0;
+              if ( l > 0 )
+                while (i < l)
+                  h = (h << 5) - h + s.charCodeAt(i++) | 0;
+              return h;
+            },
             writeUserData() {
+                var postsRef = this.ref.child("chores");
+                var date = new Date();
                 var choreObj = {
                     description: this.choreInput,
                     reward: "10",
-                    id: this.choresList.length,
+                    id: date.toString(),
                     verify: false,
                     completed: false
 
                 };
-                var postsRef = this.ref.child("chores");
+                
+                console.log(choreObj);
+
                 var newPostRef = postsRef.push();
-                console.log(newPostRef);
+
                 newPostRef.set(choreObj);
 
                 //client
