@@ -21,9 +21,9 @@ config = {
 }
 
 
-session_client = dialogflow.SessionsClient()
-DIALOGFLOW_PROJECT_ID = "benji-42f8d"
-DIALOGFLOW_LANGUAGE_CODE = "en"
+# session_client = dialogflow.SessionsClient()
+# DIALOGFLOW_PROJECT_ID = "benji-42f8d"
+# DIALOGFLOW_LANGUAGE_CODE = "en"
 
 firebase = pyrebase.initialize_app(config)
 
@@ -62,32 +62,33 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 	print(response.query_result.fulfillment_text)
 	detect_confidence = float(response.query_result.intent_detection_confidence)
 
-	# Only take action if intent detection confidence is over 80%
-	if detect_confidence > 0.8:
+	# Only take action if intent detection confidence is over 80% for deposits and withdrawals
 
-		if transaction_type == "Deposit":
-			curr_user = db.child("users").child(username).get()
+	if transaction_type == "Deposit" and detect_confidence > 0.8::
+		curr_user = db.child("users").child(username).get()
 
-			# Update current balance
-			current_balance = float(curr_user.val()["balance"])
-			transaction_amount = float(response.query_result.parameters["currency_amount"]["amount"])
-			current_balance += transaction_amount
+		# Update current balance
+		current_balance = float(curr_user.val()["balance"])
+		transaction_amount = float(response.query_result.parameters["currency_amount"]["amount"])
+		current_balance += transaction_amount
+		db.child("users").child(username).update({ "balance": current_balance })
+
+		return "Deposit completed"
+
+	elif transaction_type == "Withdraw" and detect_confidence > 0.8::
+		curr_user = db.child("users").child(username).get()
+
+		# Update current balance
+		current_balance = float(curr_user.val()["balance"])
+		transaction_amount = float(response.query_result.parameters["currency_amount"]["amount"])
+		if current_balance >= transaction_amount:
+			current_balance -= transaction_amount
 			db.child("users").child(username).update({ "balance": current_balance })
-		elif transaction_type == "Withdraw":
-			curr_user = db.child("users").child(username).get()
+		else:
+			print("Error: not enough money in account")
+			return "Error: not enough money in account"
 
-			# Update current balance
-			current_balance = float(curr_user.val()["balance"])
-			transaction_amount = float(response.query_result.parameters["currency_amount"]["amount"])
-			if current_balance >= transaction_amount:
-				current_balance -= transaction_amount
-				db.child("users").child(username).update({ "balance": current_balance })
-			else:
-				print("Error: not enough money in account")
-				return "Error: not enough money in account"
-
-
-		return "Deposit/Withdrawal completed"
+		return "Withdrawal completed"
 
 
 	elif transaction_type == "Chore_Complete" and detect_confidence > 0.4:
