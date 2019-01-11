@@ -40,7 +40,7 @@ class FaceAuth extends Component {
   }
    
   componentWillReceiveProps = (nextProps) => {
-    if(this.props.user != null) {
+    if(this.props.user != nextProps.user) {
       console.log('routed')
       history.push('/main')
     }
@@ -142,7 +142,9 @@ class FaceAuth extends Component {
       console.log(bestMatch.toString())
       const face = bestMatch.distance > this.state.threshold || bestMatch.label == "unknown" ? null : bestMatch.label
       
-      this.props.changeUser(face)
+      if(face) {
+        this.props.changeUser(face);
+      }
       this.props.changeNumFaces(detections.length)
       this.props.changeExpression(this.bestExpression(detections[0].expressions))
       // const timeout = this._isMounted && setTimeout(() => this.onPlay())
